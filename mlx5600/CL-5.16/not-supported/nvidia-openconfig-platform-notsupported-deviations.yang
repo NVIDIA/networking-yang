@@ -1,0 +1,621 @@
+module nvidia-openconfig-platform-notsupported-deviations {
+  namespace "http://nvidia.com/yang/openconfig/platform/not-supported-deviations";
+  prefix nvidia-platform-notsupported-deviations;
+
+  import openconfig-platform {
+    prefix oc-platform;
+  }
+
+  import openconfig-platform-psu {
+    prefix oc-platform-psu;
+  }
+
+  import openconfig-alarms {
+    prefix oc-alarms;
+  }
+
+  import openconfig-platform-transceiver {
+    prefix oc-transceiver;
+  }
+
+  import openconfig-platform-pipeline-counters {
+    prefix oc-ppc;
+  }
+
+  import nvidia-platform-storage-augments {
+    prefix oc-storage-augments;
+  }
+
+  import nvidia-platform-integrated-circuit-augments {
+    prefix nvidia-ic-aug;
+  }
+
+  import openconfig-platform-storage {
+    prefix oc-storage;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+    www.nvidia.com";
+  description
+    "This module contains openconfig platform not-supported deviations.
+
+    Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-03-18 {
+    description
+      "Auto-generated not-supported deviations for unsupported paths";
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:software-module {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:chassis {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/nvidia-ic-aug:power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:drop {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:errors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:control-plane-traffic/oc-ppc:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:packet {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:fabric {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:power-supply/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:power-supply/oc-platform:state/oc-platform-psu:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:cpu {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:properties {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage-augments:total-size {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:percentage-used {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:reallocated-sectors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:life-left {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:soft-read-error-rate {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:offline-uncorrectable-sectors-count {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:end-to-end-error {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:backplane {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:empty {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:hardware-version {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:location {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:removable {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-mismatch {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:install-position {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-poweroff-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-failure {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:memory {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:switchover-ready {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:used-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:parent {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:model-name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-poweroff-reason {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-reason {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:install-component {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:base-mac-address {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:mfg-date {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:redundant-role {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:pcie {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:mfg-name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:allocated-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:clei-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:controller-card {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:subcomponents {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:fan/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:associated-optical-channel {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:tx-laser {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:target-output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-frequency {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tx-laser {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tx-failure {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:associated-optical-channel {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-age {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:target-frequency-deviation {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:target-output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tec-current {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-temperature {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:index {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:host-lanes/oc-transceiver:lane/oc-transceiver:state/oc-transceiver:lane-number {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:thresholds {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:input-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-corrected-bytes {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:module-functional-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:post-fec-ber {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:ethernet-pmd-preconf {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-status {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:form-factor-preconf {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-uncorrectable-words {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-corrected-bits {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:laser-bias-current {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:pre-fec-ber {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-uncorrectable-blocks {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:otn-compliance-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fault-condition {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:connector-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:sonet-sdh-compliance-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+}

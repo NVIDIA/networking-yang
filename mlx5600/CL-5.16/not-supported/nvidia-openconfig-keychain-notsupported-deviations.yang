@@ -1,0 +1,28 @@
+module nvidia-openconfig-keychain-notsupported-deviations {
+  namespace "http://nvidia.com/yang/openconfig/keychain/not-supported-deviations";
+  prefix nvidia-keychain-notsupported-deviations;
+
+  import openconfig-keychain {
+    prefix oc-keychain;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+    www.nvidia.com";
+  description
+    "This module contains openconfig keychain not-supported deviations.
+
+    Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-03-18 {
+    description
+      "Auto-generated not-supported deviations for unsupported paths";
+  }
+
+  deviation /oc-keychain:keychains {
+    description "Not supported";
+    deviate not-supported;
+  }
+}

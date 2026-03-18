@@ -1,0 +1,198 @@
+module nvidia-openconfig-acl-notsupported-deviations {
+  namespace "http://nvidia.com/yang/openconfig/acl/not-supported-deviations";
+  prefix nvidia-acl-notsupported-deviations;
+
+  import openconfig-acl {
+    prefix oc-acl;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+    www.nvidia.com";
+  description
+    "This module contains openconfig acl not-supported deviations.
+
+    Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-03-18 {
+    description
+      "Auto-generated not-supported deviations for unsupported paths";
+  }
+
+  deviation /oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:interface-ref {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:config/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:state/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:config/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:mpls {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:matched-octets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:matched-packets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:actions/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:l2/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:destination-flow-label {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:destination-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:dscp-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:source-flow-label {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:source-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:length {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:icmpv6/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:icmpv6/oc-acl:state/oc-acl:code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:input-interface {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:icmpv4/oc-acl:state/oc-acl:code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:icmpv4/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:dscp-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:destination-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:source-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:length {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:source-port-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:destination-port-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:detail-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:explicit-detail-match-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:builtin-detail {
+    description "Not supported";
+    deviate not-supported;
+  }
+}
