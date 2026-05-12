@@ -1,0 +1,489 @@
+module nvidia-system-augments {
+  yang-version "1";
+  namespace "http://nvidia.com/yang/openconfig/system/augments";
+  prefix nvidia-system-aug;
+
+  import openconfig-system {
+    prefix oc-sys;
+    revision-date 2024-09-24;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module contains augmentations to the OpenConfig system model
+     to support NVIDIA-specific extensions.";
+
+  revision 2025-12-17 {
+    description
+      "Add system-level 802.1X authentication support.";
+    reference
+      "1.4.0";
+  }
+
+  revision 2025-11-19 {
+    description
+      "Added contact and location information.";
+    reference
+      "1.3.0";
+  }
+
+  revision 2025-08-02 {
+    description
+      "Added mount-point augment xpaths.";
+    reference
+      "1.2.0";
+  }
+
+  revision 2025-06-02 {
+    description
+      "Add Adaptive Routing metrics.";
+    reference
+      "1.1.0";
+  }
+
+  revision 2025-04-14 {
+    description
+      "Initial version";
+    reference
+      "1.0.0";
+  }
+
+  grouping nvidia-adaptive-routing {
+    description
+      "Grouping for defining the adaptive routing related counters.";
+
+    container adaptive-routing {
+      description
+        "Container for adaptive routing metrics.";
+      container state {
+        description
+          "Container for adaptive routing state.";
+
+        container counters {
+          description
+            "Container for adaptive routing counters.";
+
+          leaf congestion-changes {
+            type oc-yang:counter64;
+            description
+              "This metric will Count the number of adaptive routing change
+              events which have been triggered due to congestion or due to
+              link-down.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping nvidia-system-dot1x-config {
+    description
+      "NVIDIA system-level 802.1X configuration state (read-only)";
+
+    leaf reauth-timeout-ignore {
+      type enumeration {
+        enum ENABLED {
+          description "Ignore re-authentication failures and keep sessions up";
+        }
+        enum DISABLED {
+          description "Do not ignore re-authentication failures";
+        }
+      }
+      description
+        "Ignores re-authentication failures and keeps sessions up";
+    }
+
+    leaf dynamic-vlan {
+      type enumeration {
+        enum DISABLED {
+          description "Dynamic VLAN assignment is disabled";
+        }
+        enum OPTIONAL {
+          description "Dynamic VLAN assignment is optional";
+        }
+        enum REQUIRED {
+          description "Dynamic VLAN assignment is required";
+        }
+      }
+      description
+        "Dynamic VLAN assignment policy";
+    }
+
+    leaf dynamic-vrf {
+      type enumeration {
+        enum DISABLED {
+          description "Dynamic VRF assignment is disabled";
+        }
+        enum OPTIONAL {
+          description "Dynamic VRF assignment is optional - authentication succeeds even if no VRF VSA is provided";
+        }
+        enum REQUIRED {
+          description "Dynamic VRF assignment is required - authentication fails if no VRF VSA is provided";
+        }
+      }
+      description
+        "Dynamic VRF assignment policy from RADIUS for L3 interfaces";
+    }
+
+    leaf max-stations {
+      type uint8;
+      description
+        "Maximum number of stations allowed per interface";
+    }
+
+    leaf dynamic-ipv6-multi-tenant {
+      type enumeration {
+        enum ENABLED {
+          description "Dynamic IPv6 multi-tenant isolation is enabled";
+        }
+        enum DISABLED {
+          description "Dynamic IPv6 multi-tenant isolation is disabled";
+        }
+      }
+      description
+        "Dynamic IPv6 multi-tenant isolation status";
+    }
+  }
+
+  grouping nvidia-radius-config {
+    description
+      "RADIUS configuration data";
+
+    leaf nas-ip-address {
+      type inet:ip-address;
+      description
+        "NAS IP address used in RADIUS messages";
+    }
+
+    leaf nas-identifier {
+      type string;
+      description
+        "NAS identifier used in RADIUS messages";
+    }
+  }
+
+  augment "/oc-sys:system/oc-sys:mount-points/oc-sys:mount-point/oc-sys:state" {
+    leaf files-total {
+      type uint64;
+      description
+        "Filesystem total number of files.";
+    }
+
+    leaf files-available {
+      type uint64;
+      description
+        "Filesystem total number of files available.";
+    }
+
+    leaf read-only {
+      type boolean;
+      description
+        "Filesystem read-only status.";
+    }
+
+    leaf device-error {
+      type boolean;
+      description
+        "True if an error occurred while receiving statistics for the device.";
+    }
+  }
+
+  augment "/oc-sys:system" {
+    description
+      "Adds adaptive routing metrics at the system root level.";
+    uses nvidia-adaptive-routing;
+  }
+
+  augment "/oc-sys:system/oc-sys:state" {
+    description
+      "Adds contact and device information.";
+    leaf contact {
+      type string;
+      description
+        "Device contact information.";
+    }
+    leaf location {
+      type string;
+      description
+        "Device location information.";
+    }
+  }
+
+  augment "/oc-sys:system" {
+    description
+      "Adds NVIDIA 802.1X system-level operational state";
+
+    container dot1x {
+      config false;
+      description
+        "Top-level container for system-wide 802.1X operational state";
+
+      container state {
+        description
+          "Operational state data for system 802.1X";
+
+        uses nvidia-system-dot1x-config;
+      }
+
+      container radius {
+        description
+          "RADIUS operational state for 802.1X";
+
+        container state {
+          description
+            "Operational state data for RADIUS";
+
+          uses nvidia-radius-config;
+        }
+      }
+
+      container ipv6-profiles {
+        description
+          "Container for IPv6 profiles for dynamic multi-tenant isolation";
+
+        list profile {
+        key "name";
+        config false;
+        description
+          "List of IPv6 profiles for dynamic multi-tenant isolation";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Name of the IPv6 profile";
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state data for IPv6 profile";
+
+          leaf name {
+            type string;
+            description
+              "Name of the IPv6 profile (e.g., 'VT')";
+          }
+
+          leaf route-tag {
+            type uint32;
+            description
+              "Route tag associated with this IPv6 profile";
+          }
+        }
+
+          container properties {
+            description
+              "Container for properties within the IPv6 profile";
+
+        list property {
+          key "id";
+          config false;
+          description
+            "List of properties within the IPv6 profile";
+
+          leaf id {
+            type leafref {
+              path "../state/id";
+            }
+            description
+              "ID of the property";
+          }
+
+          container state {
+            config false;
+            description
+              "Operational state data for profile property";
+
+            leaf id {
+              type string;
+              description
+                "ID of the property (e.g., 'PREFIX', 'VSA', 'PORT', 'TOR')";
+            }
+
+            leaf offset-in-bits {
+              type uint16;
+              description
+                "Bit offset of the property in the IPv6 address";
+            }
+
+            leaf length-in-bits {
+              type uint16;
+              description
+                "Length in bits of the property";
+            }
+
+            leaf property-value {
+              type string;
+              description
+                "Value of the property (hex value or identifier like 'vsa-id', 'port-id')";
+            }
+
+            leaf isolation-property {
+              type enumeration {
+                enum enabled {
+                  description "Isolation is enabled for this property";
+                }
+                enum disabled {
+                  description "Isolation is disabled for this property";
+                }
+              }
+              description
+                "Whether this property is used for tenant isolation";
+            }
+
+            leaf summarize-out {
+              type enumeration {
+                enum enabled {
+                  description "Route summarization is enabled";
+                }
+                enum disabled {
+                  description "Route summarization is disabled";
+                }
+              }
+              description
+                "Whether routes using this property should be summarized on egress";
+                }
+              }
+            }
+          }
+        }
+      }
+
+      list supplicant {
+        key "mac";
+        config false;
+        description
+          "List of 802.1X supplicants on the system";
+
+        leaf mac {
+          type leafref {
+            path "../state/mac";
+          }
+          description
+            "MAC address of the supplicant";
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state data for the supplicant";
+
+          leaf mac {
+            type oc-yang:mac-address;
+            description
+              "MAC address of the supplicant";
+          }
+
+          leaf status {
+            type string;
+            description
+              "Authentication status of the supplicant";
+          }
+        }
+      }
+    }
+  }
+
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:user" {  
+    description
+      "Add cumulative CPU user time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent running in user space.";
+    }  
+  }
+
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:kernel" {  
+    description
+      "Add cumulative CPU kernel time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent running in kernel space.";
+    }  
+  }
+    
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:nice" {  
+    description
+      "Add time spent by low-priority (niced) user processes in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent running low-priority (niced) user processes.";
+    }
+  }
+    
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:idle" {  
+    description
+      "Add CPU idle time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent idle.";
+    }
+  }
+    
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:wait" {  
+    description
+      "Add CPU I/O wait time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent waitng I/O.";
+    }
+  }
+    
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:hardware-interrupt" {  
+    description
+      "Add CPU hardware interrupt time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent servicing hardware interrupts.";
+    }
+  }
+
+  augment "/oc-sys:system/oc-sys:cpus/oc-sys:cpu/oc-sys:state/oc-sys:software-interrupt" {  
+    description
+      "Add CPU software interrupt time in seconds.";
+    leaf seconds {
+      type uint64;
+      description
+        "The total number of seconds spent servicing software interrupts.";
+    }
+  }
+
+  // Augment AAA RADIUS server state with NVIDIA-specific fields
+  augment "/oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state" {
+    description
+      "Add NVIDIA-specific RADIUS server configuration fields";
+
+    leaf priority {
+      type uint8;
+      description
+        "Priority of this RADIUS server. Lower values indicate higher priority.
+         Servers are tried in priority order during authentication.";
+    }
+
+    leaf vrf {
+      type string;
+      description
+        "VRF (Virtual Routing and Forwarding) instance for RADIUS server communication.
+         Empty string indicates the default VRF.";
+    }
+  }
+} 
