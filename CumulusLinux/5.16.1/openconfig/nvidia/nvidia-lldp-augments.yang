@@ -1,0 +1,57 @@
+module nvidia-lldp-augments {
+  yang-version 1.1;
+  namespace "http://nvidia.com/yang/openconfig/lldp/augments";
+  prefix nvidia-lldp-aug;
+
+  import openconfig-lldp {
+    prefix oc-lldp;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module contains augmentations to the OpenConfig LLDP model
+     to support NVIDIA-specific extensions.";
+
+  revision 2025-04-11 {
+    description
+      "Initial version";
+  }
+
+  // Augment the lldp-neighbor-state grouping to replace the management-address leaf with a list
+  augment "/oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state" {
+    description
+      "Augment the LLDP neighbor state to use a list of management addresses instead of a single address";
+    
+    list management-addresses {
+      key "address";
+      description
+        "The Management Addresses identify network addresses associated
+        with the local LLDP agent, which can be used to reach the agent
+        on the port identified in the Port ID TLV.";
+
+      leaf address {
+        type string;
+        description
+          "The Management Address is a mandatory TLV which identifies a
+          network address associated with the local LLDP agent, which
+          can be used to reach the agent on the port identified in the
+          Port ID TLV.";
+      }
+
+      leaf type {
+        type string;
+        description
+          "The enumerated value for the network address type
+          identified in this TLV. This enumeration is defined in the
+          'Assigned Numbers' RFC [RFC3232] and the
+          ianaAddressFamilyNumbers object.";
+      }
+    }
+  }
+} 
