@@ -1,0 +1,46 @@
+module nvidia-lldp-deviations {
+  yang-version 1.1;
+  namespace "http://nvidia.com/yang/openconfig/lldp/deviations";
+  prefix nvidia-lldp-dev;
+
+  import openconfig-lldp {
+    prefix oc-lldp;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module contains deviations from the OpenConfig LLDP model
+     to support NVIDIA-specific extensions.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-05-13 {
+    description
+      "Tidy up description.";
+  }
+
+  revision 2025-04-11 {
+    description
+      "Initial version";
+  }
+
+  // Deviation to indicate that the original management-address leaf is not supported
+  deviation "/oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state/oc-lldp:management-address" {
+    deviate not-supported;
+    description
+      "The management-address leaf is not supported. Use the management-addresses list instead.";
+  }
+
+  // Deviation to indicate that the original management-address-type leaf is not supported
+  deviation "/oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state/oc-lldp:management-address-type" {
+    deviate not-supported;
+    description
+      "The management-address-type leaf is not supported. Use the management-addresses list instead.";
+  }
+} 
