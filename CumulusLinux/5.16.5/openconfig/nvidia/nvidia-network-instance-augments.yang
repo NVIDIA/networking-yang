@@ -1,0 +1,154 @@
+module nvidia-network-instance-augments {
+  namespace "http://nvidia.com/yang/openconfig/network-instance/augments";
+  prefix nvidia-ni-augments;
+
+  import openconfig-network-instance {
+    prefix oc-ni;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+  import openconfig-inet-types {
+    prefix oc-inet;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig Network Instance augments in NVidia Cumulus OS.
+
+     Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2025-07-16 {
+    description
+      "Changed SID type from string to oc-inet:ipv6-address.";
+    reference
+      "1.1.0";
+  }
+
+  revision 2025-06-02 {
+    description
+      "Initial network instance augment file.";
+    reference
+      "1.0.0";
+  }
+
+  grouping nvidia-srv6 {
+    description
+      "Grouping for defining SRv6 related counters.";
+
+    container srv6 {
+      description
+        "Container for SRv6 metrics.";
+
+      container global {
+        description
+          "Container for global SRv6 metrics.";
+
+        container state {
+          description
+            "State information for global SRv6.";
+
+          container counters {
+            description
+              "Counters for global SRv6.";
+
+            leaf no-sid-drops {
+              type oc-yang:counter64;
+              description
+                "The number of packets dropped due to no matching SID.";
+            }
+          }
+        }
+      }
+
+      container sids {
+        description
+          "Container for SRv6 SID entries.";
+
+        list sid {
+          key "id";
+          description
+            "List of SRv6 SID entries.";
+
+          leaf id {
+            type oc-inet:ipv6-address;
+            description
+              "The SID identifier.";
+          }
+
+          container state {
+            description
+              "State information for SRv6 SID.";
+
+            leaf id {
+              type oc-inet:ipv6-address;
+              description
+                "The SID identifier.";
+            }
+
+            container counters {
+              description
+                "Counters for SRv6 SID.";
+
+              leaf in-pkts {
+                type oc-yang:counter64;
+                description
+                  "The number of packets received for this SID.";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  augment "/oc-ni:network-instances/oc-ni:network-instance" {
+    description
+      "Adds SRv6 counters at the network instance level.";
+    uses nvidia-srv6;
+  }
+
+  augment "/oc-ni:network-instances/oc-ni:network-instance/oc-ni:tables/oc-ni:table/oc-ni:state" {
+    description
+      "Augment table with operational state container for route counting.";
+      leaf route-count {
+        type oc-yang:counter64;
+        description
+          "Number of routes currently present in this table.";
+      }
+  }
+
+  augment "/oc-ni:network-instances/oc-ni:network-instance/oc-ni:tables" {
+    description
+      "Add aggregate route count state container to tables.";
+
+    container state {
+      config false;
+      description
+        "Operational state for aggregate RIB table metrics.";
+
+      leaf ipv4-route-count {
+        type oc-yang:counter64;
+        description
+          "Total number of IPv4 routes across all protocols in this network instance.";
+      }
+
+      leaf ipv6-route-count {
+        type oc-yang:counter64;
+        description
+          "Total number of IPv6 routes across all protocols in this network instance.";
+      }
+
+      leaf rib-nexthop-group-count {
+        type oc-yang:counter64;
+        description
+          "Total number of nexthop groups in the system, same value for all 'vrf'.";
+      }
+    }
+  }
+}

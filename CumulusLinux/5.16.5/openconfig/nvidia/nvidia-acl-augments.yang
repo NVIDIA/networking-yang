@@ -1,0 +1,117 @@
+module nvidia-acl-augments {
+  namespace "http://nvidia.com/yang/openconfig/acl/augments";
+  prefix nvidia-acl-aug;
+
+  import openconfig-acl {
+    prefix oc-acl;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig ACL augments in Nvidia Cumulus OS.
+
+     Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2025-09-14 {
+    description
+      "Initial acl augment file.";
+    reference
+      "1.0.0";
+  }
+
+  // Additional forwarding action identities
+  identity SET_CLASS {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Set forwarding class on matched traffic.";
+  }
+
+  identity SET_QOS {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Set QoS parameters on matched traffic.";
+  }
+
+  identity SET_DSCP {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Set Dscp parameters on matched traffic.";
+  }
+
+  identity ERSPAN {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Encapsulated Remote SPAN mirroring for matched traffic.";
+  }
+
+  identity POLICE {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Apply policing to matched traffic.";
+  }
+
+  identity SPAN {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "SPAN mirroring for matched traffic.";
+  }
+
+  identity DEST_NAT {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Destination NAT for matched traffic.";
+  }
+
+  identity SOURCE_NAT {
+    base oc-acl:FORWARDING_ACTION;
+    description
+      "Source NAT for matched traffic.";
+  }
+
+  augment "/oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state" {
+    description
+      "Adds ecn and fragment leaves to IPv4 ACL entry state.";
+
+    leaf ecn {
+      type string;
+      description
+        "Explicit Congestion Notification state associated with this ACL entry.";
+    }
+
+    leaf fragment {
+      type string;
+      description
+        "IP fragment matching state associated with this ACL entry.";
+    }
+
+  }
+
+  augment "/oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state" {
+    description
+      "Adds ecn leaf to IPv6 ACL entry state.";
+
+    leaf ecn {
+      type string;
+      description
+        "Explicit Congestion Notification state associated with this ACL entry.";
+    }
+
+  }
+
+  augment "/oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:l2/oc-acl:state" {
+    description
+      "Adds vlan leaf to L2 ACL entry state.";
+
+    leaf vlan {
+      type string;
+      description
+        "VLAN identifier matched by this ACL entry.";
+    }
+  }
+
+}
