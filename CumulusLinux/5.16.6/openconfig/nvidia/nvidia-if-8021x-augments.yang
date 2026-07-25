@@ -1,0 +1,190 @@
+module nvidia-if-8021x-augments {
+  yang-version 1;
+  namespace "http://nvidia.com/yang/openconfig/interfaces/8021x/augments";
+  prefix nvidia-if-dot1x-aug;
+
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+  import openconfig-if-ethernet {
+    prefix oc-eth;
+  }
+  import openconfig-if-8021x {
+    prefix oc-if-8021x;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module contains augments to the OpenConfig 802.1X interface model
+     to support NVIDIA-specific extensions.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-05-13 {
+    description
+      "Tidy up description.";
+  }
+
+  revision 2025-12-17 {
+    description
+      "Added EAP and MBA interface state support, 802.1X counters grouping, and authenticated session augments";
+    reference
+      "1.0.0";
+  }
+
+  grouping dot1x-counters {
+    description
+      "802.1X EAP packet counters for authenticated sessions";
+
+    container counters {
+      description
+        "Counters for 802.1X authenticated sessions";
+
+      leaf out-eapol-req-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAP Request packets transmitted to the authenticated supplicant";
+      }
+
+      leaf in-eapol-resp-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAP Response packets received from the authenticated supplicant";
+      }
+
+      leaf in-eapol-start-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAPOL Start packets received from the authenticated supplicant";
+      }
+
+      leaf out-eapol-req-id-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAP Request Identity packets transmitted to the authenticated supplicant";
+      }
+
+      leaf in-eapol-invalid-frames {
+        type oc-yang:counter64;
+        description
+          "Number of invalid EAP packets received from the authenticated supplicant";
+      }
+
+      leaf in-eapol-logoff-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAPOL Logoff packets received from the authenticated supplicant";
+      }
+
+      leaf in-eapol-len-err-frames {
+        type oc-yang:counter64;
+        description
+          "Number of EAPOL packets with length errors received from the authenticated supplicant";
+      }
+
+      leaf reauth-timeouts {
+        type oc-yang:counter64;
+        description
+          "Number of reauthentication timeouts that occurred while the session was authenticated.
+           When reauthentication times out (e.g., RADIUS server is unreachable or times out),
+           by default the supplicant entry is removed from the database. However, if
+           reauth-timeout-ignore is configured, the entry is retained with Authorized state
+           even if reauthentication fails and this counter is incremented by 1 on each reauthentication failure.";
+      }
+    }
+  }
+
+  // Augment interface dot1x state with NVIDIA-specific leaves
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-if-8021x:dot1x/oc-if-8021x:state" {
+    description
+      "Add NVIDIA-specific 802.1X interface state leaves";
+
+    leaf eap {
+      type enumeration {
+        enum ENABLED {
+          description "EAP authentication is enabled";
+        }
+        enum DISABLED {
+          description "EAP authentication is disabled";
+        }
+      }
+      description
+        "EAP authentication status on the interface";
+    }
+
+    leaf mba {
+      type enumeration {
+        enum ENABLED {
+          description "MAC-based authentication is enabled";
+        }
+        enum DISABLED {
+          description "MAC-based authentication is disabled";
+        }
+      }
+      description
+        "MAC-based authentication (MBA) status on the interface";
+    }
+
+    leaf ipv6-profile {
+      type string;
+      description
+        "Name of the IPv6 profile assigned to this interface for dynamic multi-tenant isolation.
+         This should reference a profile configured at /system/dot1x/ipv6-profile/profile[name].
+         If not set or empty, no IPv6 profile is assigned to this interface.";
+    }
+
+    leaf port-id {
+      type string;
+      description
+        "Port ID value for this interface. This is always populated with the actual
+         hex-string port ID value. This port ID is used for IPv6 prefix generation.";
+    }
+  }
+
+  // Augment authenticated sessions state with additional fields
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-if-8021x:authenticated-sessions/oc-if-8021x:authenticated-session/oc-if-8021x:state" {
+    description
+      "Add NVIDIA-specific 802.1X authenticated session state fields";
+
+    leaf auth-type {
+      type string;
+      description
+        "Authentication type used for this session (e.g., MD5, TLS, PEAP, etc.)";
+    }
+
+    leaf vlan {
+      type uint16;
+      description
+        "VLAN ID assigned to this authenticated session";
+    }
+
+    leaf ipv6-prefix {
+      type string;
+      description
+        "IPv6 prefix assigned to this authenticated session for dynamic multi-tenant isolation.
+         This is generated based on the IPv6 profile configuration and the interface port ID.
+         Format: IPv6 CIDR notation (e.g., 2001:db8:100::/64)";
+    }
+
+    leaf vrf {
+      type string;
+      description
+        "VRF name that the interface was dynamically assigned to during 802.1X authentication
+         when dynamic-vrf feature is enabled. This value is assigned per-interface but appears
+         under each authenticated session for that interface as the vrf is not dynamically
+         assigned to an interface unless and until the interface has at least one
+         authenticated supplicant session.";
+    }
+
+    uses dot1x-counters;
+  }
+}
