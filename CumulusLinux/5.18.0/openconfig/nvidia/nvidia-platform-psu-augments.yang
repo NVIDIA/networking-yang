@@ -1,0 +1,70 @@
+module nvidia-platform-psu-augments {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://nvidia.com/yang/openconfig/platform/psu/augments";
+
+  prefix "nvidia-psu-aug";
+
+  import openconfig-platform { prefix oc-platform; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-extensions { prefix oc-ext; }
+
+
+  // meta
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig Platform power-supply augments in
+     NVidia Cumulus OS. It adds an input-power leaf to the power-supply
+     operational state, used by input-only power components such as Power
+     Distribution Boards (PDBs) that expose input power but no output power.
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision "2026-07-15" {
+    description
+      "Initial revision";
+    reference "0.1.0";
+  }
+
+  // OpenConfig specific extensions for module metadata.
+  oc-ext:regexp-posix;
+  oc-ext:catalog-organization "openconfig";
+  oc-ext:origin "openconfig";
+
+  // grouping statements
+
+  grouping psu-state-augments {
+    description
+      "Operational state data augments for power-supply components";
+
+    leaf input-power {
+      type oc-types:ieeefloat32;
+      units watts;
+      description
+        "The input power consumed by the power supply.
+
+         For input-only power components such as Power Distribution
+         Board hotswap controllers (PDBn-HSCm), this reports the power
+         drawn on the high-voltage input feed. It is distinct from the
+         standard output-power state leaf, which reports a power
+         supply's output side: such components expose input power but
+         no output power.";
+    }
+  }
+
+  // augment statements
+  augment "/oc-platform:components/oc-platform:component/" +
+    "oc-platform:power-supply/oc-platform:state" {
+    description
+      "Adding input-power to the power-supply operational state";
+
+    uses psu-state-augments;
+  }
+}

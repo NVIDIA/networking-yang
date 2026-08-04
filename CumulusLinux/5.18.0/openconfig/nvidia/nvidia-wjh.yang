@@ -1,0 +1,603 @@
+module nvidia-wjh {
+  yang-version 1.1;
+
+  namespace "http://nvidia.com/yang/openconfig/wjh";
+  prefix nvidia-wjh;
+
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-yang-types { prefix oc-yang; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-inet-types { prefix oc-inet; }
+  import openconfig-interfaces { prefix oc-if; }
+  import openconfig-packet-match-types { prefix oc-pkt-match-types; }
+  import openconfig-vlan-types { prefix oc-vlan-types; }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "NVIDIA What-Just-Happened (WJH) telemetry.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  oc-ext:openconfig-version "0.1.2";
+
+  revision 2026-05-22 {
+    description
+      "Initial revision with refined scalar typing, timestamp epoch
+       descriptions, Ethertype typing, channel subtree guards, and
+       reason leaf naming.";
+    reference "0.1.2";
+  }
+
+  // identities ----------------------------------------------------------
+
+  identity wjh-service-state {
+    description "WJH service state.";
+  }
+
+  identity ENABLED {
+    base wjh-service-state;
+    description "WJH service is enabled.";
+  }
+
+  identity DISABLED {
+    base wjh-service-state;
+    description "WJH service is disabled.";
+  }
+
+  identity wjh-category {
+    description "WJH drop category.";
+  }
+
+  identity L1_DROPS {
+    base wjh-category;
+    description "Layer 1 / port-state drops.";
+  }
+
+  identity L2_DROPS {
+    base wjh-category;
+    description "Layer 2 drops.";
+  }
+
+  identity L3_DROPS {
+    base wjh-category;
+    description "Router / Layer 3 drops.";
+  }
+
+  identity TUNNEL_DROPS {
+    base wjh-category;
+    description "Tunnel / overlay drops.";
+  }
+
+  identity ACL_DROPS {
+    base wjh-category;
+    description "ACL drops.";
+  }
+
+  identity BUFFER_DROPS {
+    base wjh-category;
+    description "Buffer / queue drops.";
+  }
+
+  identity wjh-severity {
+    description "WJH event severity.";
+  }
+
+  identity NOTICE {
+    base wjh-severity;
+    description "Notice severity.";
+  }
+
+  identity WARNING {
+    base wjh-severity;
+    description "Warning severity.";
+  }
+
+  identity ERROR {
+    base wjh-severity;
+    description "Error severity.";
+  }
+
+  // groupings ----------------------------------------------------------
+
+  grouping wjh-service-state-top {
+    description "WJH service state.";
+
+    leaf service-state {
+      type identityref {
+        base wjh-service-state;
+      }
+      description "WJH service state.";
+    }
+  }
+
+  grouping wjh-channel-state {
+    description
+      "Channel state.
+
+       The counters below are populated only on packet-trap
+       channels.";
+
+    leaf name {
+      type string;
+      description "Channel name.";
+    }
+
+    leaf-list categories {
+      type identityref {
+        base wjh-category;
+      }
+      description "Drop categories bound to this channel.";
+    }
+
+    leaf total-events {
+      type oc-yang:counter64;
+      units "events";
+      description
+        "Drop events received.";
+    }
+
+    leaf aggregated-events {
+      type oc-yang:counter64;
+      units "events";
+      description
+        "Events merged into an aggregate bucket.";
+    }
+
+    leaf overflow-events {
+      type oc-yang:counter64;
+      units "events";
+      description
+        "Events dropped because the aggregate cache was full.";
+    }
+  }
+
+  grouping wjh-packet-sample {
+    description
+      "Representative packet sample. All leaves optional; non-IP
+       frames populate only the L2 leaves.";
+
+    leaf non-ip {
+      type boolean;
+      description
+        "True when the dropped frame is not an IP packet.";
+    }
+
+    leaf source-mac {
+      type oc-yang:mac-address;
+      description "Source MAC.";
+    }
+
+    leaf destination-mac {
+      type oc-yang:mac-address;
+      description "Destination MAC.";
+    }
+
+    leaf ethertype {
+      type oc-pkt-match-types:ethertype-type;
+      description
+        "Ethertype. Known values may be represented using OpenConfig
+         Ethertype identities; otherwise the numeric Ethertype value
+         is used.";
+    }
+
+    leaf vlan-id {
+      type oc-vlan-types:vlan-id;
+      description "VLAN ID. Absent on untagged frames.";
+    }
+
+    leaf source-address {
+      type oc-inet:ip-address;
+      description "Source IPv4 or IPv6 address.";
+    }
+
+    leaf destination-address {
+      type oc-inet:ip-address;
+      description "Destination IPv4 or IPv6 address.";
+    }
+
+    leaf protocol {
+      type oc-pkt-match-types:ip-protocol-type;
+      description "IP protocol.";
+    }
+
+    leaf source-port {
+      type oc-inet:port-number;
+      description "L4 source port.";
+    }
+
+    leaf destination-port {
+      type oc-inet:port-number;
+      description "L4 destination port.";
+    }
+  }
+
+  grouping wjh-acl-info {
+    description "ACL metadata.";
+
+    leaf rule-id {
+      type uint64;
+      description
+        "Composite hardware rule identifier: ACL region ID in bits
+         32-63, rule offset in bits 0-31.";
+    }
+
+    leaf rule {
+      type string;
+      description
+        "Hardware-formatted rule description, of the form
+         'Priority[<n>];KEY[<field>: <value>/<mask>];...;
+          ACTION[<verb>: <args>];...'.";
+    }
+  }
+
+  grouping wjh-buffer-info {
+    description
+      "Buffer / queue metadata. Present only when category is
+       BUFFER_DROPS.";
+
+    leaf traffic-class {
+      type uint8 {
+        range "0..7";
+      }
+      description
+        "Traffic class of the representative packet sample.";
+    }
+
+    leaf max-occupancy {
+      type uint32;
+      units "bytes";
+      description
+        "Peak buffer occupancy across all packets in this bucket.";
+    }
+
+    leaf max-latency {
+      type uint64;
+      units "nanoseconds";
+      description
+        "Peak queue-induced latency across all packets in this
+         bucket.";
+    }
+  }
+
+  grouping wjh-aggregate-event-state {
+    description "One aggregation bucket.";
+
+    leaf event-id {
+      type uint64;
+      description
+        "Opaque event identifier per channel. Not stable across
+         service restart.";
+    }
+
+    leaf category {
+      type identityref {
+        base wjh-category;
+      }
+      mandatory true;
+      description "Drop category. Never L1_DROPS in this subtree.";
+    }
+
+    leaf reason-id {
+      type uint32;
+      mandatory true;
+      description
+        "WJH reason numeric identifier.";
+    }
+
+    leaf reason-name {
+      type string;
+      description
+        "Human-readable reason text.";
+    }
+
+    leaf description {
+      type string;
+      description
+        "Short qualifier describing the reason in more detail.";
+    }
+
+    leaf severity {
+      type identityref {
+        base wjh-severity;
+      }
+      mandatory true;
+      description "Severity.";
+    }
+
+    leaf ingress-interface {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description "Ingress interface.";
+    }
+
+    leaf ingress-lag {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description
+        "Ingress LAG when the ingress port is a LAG member.";
+    }
+
+    leaf egress-interface {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description
+        "Egress interface of the representative sample.";
+    }
+
+    leaf egress-lag {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description
+        "Egress LAG when the egress port is a LAG member.";
+    }
+
+    leaf first-timestamp {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Timestamp of the first observed packet in this bucket,
+         expressed as nanoseconds since the Unix epoch
+         (1970-01-01T00:00:00Z).";
+    }
+
+    leaf last-timestamp {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Timestamp of the last observed packet in this bucket,
+         expressed as nanoseconds since the Unix epoch
+         (1970-01-01T00:00:00Z).";
+    }
+
+    leaf aggregation-window-start {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Aggregation window start, expressed as nanoseconds since
+         the Unix epoch (1970-01-01T00:00:00Z).";
+    }
+
+    leaf aggregation-window-end {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Aggregation window end, expressed as nanoseconds since the
+         Unix epoch (1970-01-01T00:00:00Z).";
+    }
+
+    leaf count {
+      type uint64;
+      units "packets";
+      description
+        "Per-window count of packets merged into this bucket.";
+    }
+
+    container packet {
+      description "Representative packet header sample.";
+      uses wjh-packet-sample;
+    }
+
+    container acl {
+      when "../category = 'nvidia-wjh:ACL_DROPS'";
+      description "ACL metadata. Present when category is ACL_DROPS.";
+
+      uses wjh-acl-info;
+    }
+
+    container buffer {
+      when "../category = 'nvidia-wjh:BUFFER_DROPS'";
+      description
+        "Buffer metadata. Present when category is BUFFER_DROPS.";
+
+      uses wjh-buffer-info;
+    }
+  }
+
+  grouping wjh-l1-event-state {
+    description
+      "L1 event info.";
+
+    leaf event-id {
+      type uint64;
+      description
+        "Opaque event identifier per channel. Not stable across
+         service restart.";
+    }
+
+    leaf port-down-reason {
+      type string;
+      description
+        "Human-readable port down reason text.";
+    }
+
+    leaf description {
+      type string;
+      description
+        "L1 event description.";
+    }
+
+    leaf ingress-interface {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description "Port this snapshot is for.";
+    }
+
+    leaf start-timestamp {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Previous pull-time, start of current window, expressed as
+         nanoseconds since the Unix epoch
+         (1970-01-01T00:00:00Z).";
+    }
+
+    leaf end-timestamp {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "Pull-time when this snapshot diff was emitted, expressed
+         as nanoseconds since the Unix epoch
+         (1970-01-01T00:00:00Z).";
+    }
+
+    leaf is-port-up {
+      type boolean;
+      mandatory true;
+      description "Current operational state of the port.";
+    }
+
+    leaf state-change-count {
+      type uint64;
+      units "events";
+      description
+        "State-change counter delta over
+         [start-timestamp, end-timestamp]. 0 on first emission
+         per port.";
+    }
+
+    leaf symbol-error-count {
+      type uint64;
+      units "errors";
+      description
+        "Symbol-error counter delta over
+         [start-timestamp, end-timestamp]. Reports the absolute
+         value on first emission per port and immediately after a
+         port-state transition.";
+    }
+
+    leaf crc-error-count {
+      type uint64;
+      units "errors";
+      description
+        "CRC-error counter delta over
+         [start-timestamp, end-timestamp]. Same first-emission and
+         post-transition semantics as `symbol-error-count`.";
+    }
+  }
+
+  grouping wjh-aggregate-events-top {
+    description
+      "Per-channel aggregate-events list. Present on packet-trap
+       channels.";
+
+    container aggregate-events {
+      when "../state/name != 'layer-1'";
+      description "Aggregation buckets for packet drops.";
+
+      list event {
+        key "event-id";
+
+        oc-ext:telemetry-atomic;
+
+        description
+          "Aggregation bucket. All leaves delivered atomically in
+           one gNMI Notification.";
+
+        leaf event-id {
+          type leafref {
+            path "../state/event-id";
+          }
+          description "Opaque event identifier per channel.";
+        }
+
+        container state {
+          description "Operational state.";
+          uses wjh-aggregate-event-state;
+        }
+      }
+    }
+  }
+
+  grouping wjh-l1-events-top {
+    description
+      "Per-port L1 snapshot-diff list. Present on the layer-1
+       channel.";
+
+    container l1-events {
+      when "../state/name = 'layer-1'";
+      description "Per-port L1 snapshot-diff entries.";
+
+      list event {
+        key "event-id";
+
+        oc-ext:telemetry-atomic;
+
+        description
+          "L1 snapshot. All leaves delivered atomically in one
+           gNMI Notification.";
+
+        leaf event-id {
+          type leafref {
+            path "../state/event-id";
+          }
+          description "Opaque event identifier per channel.";
+        }
+
+        container state {
+          description "Operational state.";
+          uses wjh-l1-event-state;
+        }
+      }
+    }
+  }
+
+  grouping wjh-channels-top {
+    description
+      "Per-channel container list. Each channel exposes its
+       rollup state plus exactly one of two mutually-exclusive
+       event subtrees: aggregate-events on packet-trap channels,
+       l1-events on the layer-1 channel.";
+
+    container channels {
+      description "WJH channels.";
+
+      list channel {
+        key "name";
+
+        description "WJH channel.";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description "Channel name.";
+        }
+
+        container state {
+          description "Channel state.";
+          uses wjh-channel-state;
+        }
+
+        uses wjh-aggregate-events-top;
+        uses wjh-l1-events-top;
+      }
+    }
+  }
+
+  grouping wjh-top {
+    description "Top-level WJH telemetry container.";
+
+    container wjh {
+      config false;
+      description "WJH telemetry.";
+
+      container state {
+        description "WJH service state.";
+        uses wjh-service-state-top;
+      }
+
+      uses wjh-channels-top;
+    }
+  }
+
+  uses wjh-top;
+}

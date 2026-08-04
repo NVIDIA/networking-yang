@@ -1,0 +1,123 @@
+module nvidia-procmon-augments {
+  yang-version "1";
+  namespace "http://nvidia.com/yang/openconfig/system/procmon/augments";
+  prefix nvidia-procmon-aug;
+
+  import openconfig-system {
+    prefix oc-sys;
+  }
+  import nvidia-system-services-augments {
+    prefix nvidia-svc-aug;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "Augments the existing /system/processes/process model with
+     additional process-level fields for NVIDIA-specific process
+     monitoring and linkage to systemd services.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-05-13 {
+    description
+      "Tidy up description.";
+  }
+
+  revision 2026-02-03 {
+    description
+      "Align with service-level design: parent-pid, state, thread-count,
+       subprocess-count, context-switches, virtual/shared memory,
+       service-name leafref.";
+    reference
+      "1.0.0";
+  }
+
+  augment "/oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state" {
+    description
+      "Add NVIDIA-specific process-level state attributes and
+       leaf-ref to owning service.";
+
+    leaf parent-pid {
+      type uint64;
+      description
+        "Process ID of the parent process.";
+    }
+
+    leaf state {
+      type string;
+      description
+        "Process state (e.g., running, sleeping, zombie).";
+    }
+
+    leaf thread-count {
+      type uint32;
+      description
+        "Number of threads in this process.";
+    }
+
+    leaf subprocess-count {
+      type uint32;
+      description
+        "Number of child (sub) processes.";
+    }
+
+    container context-switches {
+      description
+        "Container for context switch counters by type.";
+      list context-switch {
+        key "type";
+        description
+          "List of context switch counters by type (voluntary or non-voluntary).";
+        leaf type {
+          type enumeration {
+            enum Voluntary {
+              description
+                "Voluntary context switches (process gave up CPU voluntarily).";
+            }
+            enum "NonVoluntary" {
+              description
+                "Non-voluntary context switches (CPU was taken away by scheduler).";
+            }
+          }
+          description
+            "Type of context switch.";
+        }
+
+        leaf count {
+          type uint64;
+          description
+            "Number of context switches of this type.";
+        }
+      }
+    }
+
+    leaf virtual-memory-usage-bytes {
+      type uint64;
+      units "bytes";
+      description
+        "Virtual memory size (VmSize) in bytes.";
+    }
+
+    leaf shared-memory-usage-bytes {
+      type uint64;
+      units "bytes";
+      description
+        "Shared memory (Rss shared) in bytes.";
+    }
+
+    leaf service-name {
+      type leafref {
+        path "/oc-sys:system/nvidia-svc-aug:services/nvidia-svc-aug:service/nvidia-svc-aug:state/nvidia-svc-aug:name";
+      }
+      config false;
+      description
+        "Reference to the systemd service (unit) that owns this process.";
+    }
+  }
+}
