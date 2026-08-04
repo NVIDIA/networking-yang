@@ -1,0 +1,109 @@
+module nvidia-link-debounce-augments {
+  yang-version 1;
+  namespace "http://nvidia.com/yang/openconfig/link-debounce/augments";
+  prefix nvidia-link-debounce;
+
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module augments the OpenConfig interfaces hold-time model with
+     link debounce statistics counters.
+
+     Link debounce filters rapid link state transitions by introducing a
+     configurable delay before reporting link-up or link-down events.
+     These counters provide visibility into how many events were filtered
+     (ignored) vs accepted (received) by the debounce logic.
+
+     Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+  oc-ext:openconfig-version "1.0.0";
+
+  revision 2026-02-17 {
+    description
+      "Initial revision - link debounce statistics counters augmentation.
+       Adds counters container to hold-time/state for tracking debounce
+       filter behavior per interface.";
+    reference
+      "1.0.0";
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:hold-time/oc-if:state" {
+    description
+      "Add link debounce statistics counters to the interface hold-time
+       operational state. These counters track the behavior of the
+       hardware debounce filter.";
+
+    container counters {
+      description
+        "Link debounce statistics counters. These counters reflect the
+         behavior of the debounce timer logic in firmware:
+         - 'ignored' counters: events suppressed because the debounce
+           timer had not yet expired (transient noise filtered)
+         - 'received' counters: events accepted and propagated after
+           the debounce delay (stable state changes)
+         - 'timer' counters: debounce timer lifecycle events
+
+         Counters are reset to 0 on system reboot and can be cleared
+         via the clear counters action.";
+
+      leaf ignored-up-events {
+        type oc-yang:counter64;
+        description
+          "Number of UP events suppressed by the debounce filter because
+           the debounce timer had not yet expired. These represent
+           transient UP spikes that were filtered out.";
+      }
+
+      leaf ignored-down-events {
+        type oc-yang:counter64;
+        description
+          "Number of DOWN events suppressed by the debounce filter because
+           the debounce timer had not yet expired. These represent
+           short interruptions that were filtered out.";
+      }
+
+      leaf received-up-events {
+        type oc-yang:counter64;
+        description
+          "Number of UP events accepted and propagated after the debounce
+           delay. These represent stable link recovery events.";
+      }
+
+      leaf received-down-events {
+        type oc-yang:counter64;
+        description
+          "Number of DOWN events accepted and propagated after the debounce
+           delay. These represent sustained link failure events.";
+      }
+
+      leaf timer-cancellations {
+        type oc-yang:counter64;
+        description
+          "Number of times the debounce timer was cancelled because the
+           link state reverted before the timer expired (quick reversal).
+           High values indicate link instability or oscillation.";
+      }
+
+      leaf timer-expirations {
+        type oc-yang:counter64;
+        description
+          "Number of times the debounce timer completed successfully,
+           indicating a valid and stable state change was detected.
+           This equals the total number of debounce completions
+           (both UP and DOWN directions combined).";
+      }
+    }
+  }
+}

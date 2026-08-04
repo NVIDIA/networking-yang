@@ -1,0 +1,806 @@
+module nvidia-system-controlplane-augments {
+
+  yang-version "1";
+
+  namespace "http://nvidia.com/yang/openconfig/system-controlplane/augments";
+  prefix nvidia-system-controlplane-augments;
+
+  import openconfig-system {
+    prefix oc-sys;
+  }
+  import openconfig-system-controlplane {
+    prefix oc-sys-copp;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig System control-plane traffic counter
+     augments for NVIDIA Cumulus OS. It defines the /system/control-plane-traffic/
+     tree with ingress/egress, ipv4/ipv6.";
+
+  revision 2026-03-03 {
+    description
+      "Add full control-plane-traffic counter augments: for
+       ingress/egress ipv4/ipv6 per netstat
+       to OpenConfig mapping.";
+    reference 1.1.0 ;
+  }
+
+  revision 2025-02-13 {
+    description
+      "Initial system augment file.";
+    reference
+      "1.0.0";
+  }
+
+  grouping nvidia-ingress-ipv4-counters {
+    description
+      "IPv4 IP-layer counters under control-plane-traffic ingress.";
+    container ipv4 {
+      description
+        "IPv4 counters for control-plane ingress.";
+      container state {
+        config false;
+        description
+          "IP layer counters";
+        leaf in-receives {
+          type oc-yang:counter64;
+          description
+            "Total number of input IPv4 datagrams received";
+        }
+        leaf in-addr-errors {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to invalid destination address.";
+        }
+        leaf in-delivers {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams successfully delivered to upper layer";
+        }
+        leaf in-discarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded";
+        }
+        leaf in-hdr-errors {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to header errors";
+        }
+        leaf in-unknown-protos {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to unknown protocol";
+        }
+        leaf in-forwarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams forwarded";
+        }
+        leaf in-reassembly-ok {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams successfully reassembled.";
+        }
+        leaf in-reassembly-fails {
+          type oc-yang:counter64;
+          description
+            "IPv4 reassembly failures.";
+        }
+        leaf in-reassembly-reqd {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams requiring reassembly.";
+        }
+        leaf in-no-routes {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to no route.";
+        }
+        leaf in-octets {
+          type oc-yang:counter64;
+          description
+            "Total bytes in received IPv4 datagrams.";
+        }
+        leaf in-multicast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 multicast datagrams received.";
+        }
+        leaf in-multicast-octets {
+          type oc-yang:counter64;
+          description
+            "Bytes in IPv4 multicast datagrams.";
+        }
+        leaf in-broadcast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 broadcast datagrams received.";
+        }
+        leaf in-truncated-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to truncation.";
+        }
+        leaf in-ce-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams received with Congestion Experiencedmarking.";
+        }
+        leaf in-ect0-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams received with ECT(0) marking.";
+        }
+        leaf in-ect1-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams received with ECT(1) marking.";
+        }
+        leaf in-no-ect-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams received with no ECN marking.";
+        }
+      }
+      container icmp {
+        description
+          "ICMP counters for control-plane ingress IPv4.";
+        container state {
+          config false;
+          description
+            "ICMP counters.";
+          leaf in-msgs {
+            type oc-yang:counter64;
+            description
+              "ICMP messages received.";
+          }
+          leaf in-errors {
+            type oc-yang:counter64;
+            description
+              "ICMP messages received with errors.";
+          }
+          leaf in-dest-unreachs {
+            type oc-yang:counter64;
+            description
+              "ICMP destination unreachable received.";
+          }
+          leaf in-time-excds {
+            type oc-yang:counter64;
+            description
+              "ICMP time exceeded received.";
+          }
+          leaf in-echos {
+            type oc-yang:counter64;
+            description
+              "ICMP echo requests received.";
+          }
+          leaf in-echo-replies {
+            type oc-yang:counter64;
+            description
+              "ICMP echo replies received.";
+          }
+          leaf in-redirects {
+            type oc-yang:counter64;
+            description
+              "ICMP redirect messages received.";
+          }
+        }
+      }
+      container tcp {
+        description
+          "TCP counters for control-plane ingress IPv4.";
+        container state {
+          config false;
+          description
+            "TCP counters.";
+          leaf in-segs {
+            type oc-yang:counter64;
+            description
+              "TCP segments received.";
+          }
+          leaf in-errs {
+            type oc-yang:counter64;
+            description
+              "TCP segments received in error.";
+          }
+          leaf passive-opens {
+            type oc-yang:counter64;
+            description
+              "TCP passive connection opens.";
+          }
+          leaf curr-estab {
+            type oc-yang:gauge64;
+            description
+              "Current number of established TCP connections.";
+          }
+          leaf listen-drops {
+            type oc-yang:counter64;
+            description
+              "TCP listen queue drops.";
+          }
+          leaf listen-overflows {
+            type oc-yang:counter64;
+            description
+              "TCP listen queue overflows.";
+          }
+        }
+      }
+      container udp {
+        description
+          "UDP counters for control-plane ingress IPv4.";
+        container state {
+          config false;
+          description
+            "UDP counters.";
+          leaf in-datagrams {
+            type oc-yang:counter64;
+            description
+              "UDP datagrams received.";
+          }
+          leaf in-errors {
+            type oc-yang:counter64;
+            description
+              "UDP datagrams received with errors.";
+          }
+          leaf no-ports {
+            type oc-yang:counter64;
+            description
+              "UDP datagrams to unknown port.";
+          }
+          leaf rcvbuf-errors {
+            type oc-yang:counter64;
+            description
+              "UDP receive buffer errors.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping nvidia-egress-ipv4-counters {
+    description
+      "IPv4 IP-layer and protocol counters under control-plane-traffic egress.";
+    container ipv4 {
+      description
+        "IPv4 counters for control-plane egress.";
+      container state {
+        config false;
+        description
+          "IP layer egress counters.";
+        leaf out-requests {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams requested for output.";
+        }
+        leaf out-discarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded on output.";
+        }
+        leaf out-no-routes {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams discarded due to no route.";
+        }
+        leaf out-frag-ok {
+          type oc-yang:counter64;
+          description
+            "IPv4 datagrams successfully fragmented.";
+        }
+        leaf out-frag-fails {
+          type oc-yang:counter64;
+          description
+            "IPv4 fragmentation failures.";
+        }
+        leaf out-frag-creates {
+          type oc-yang:counter64;
+          description
+            "IPv4 fragments created.";
+        }
+        leaf out-octets {
+          type oc-yang:counter64;
+          description
+            "Total bytes in output IPv4 datagrams.";
+        }
+        leaf out-multicast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 multicast datagrams sent.";
+        }
+        leaf out-multicast-octets {
+          type oc-yang:counter64;
+          description
+            "Bytes in IPv4 multicast datagrams sent.";
+        }
+        leaf out-broadcast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv4 broadcast datagrams sent.";
+        }
+      }
+      container icmp {
+        description
+          "ICMP counters for control-plane egress IPv4.";
+        container state {
+          config false;
+          description
+            "ICMP egress counters.";
+          leaf out-msgs {
+            type oc-yang:counter64;
+            description
+              "ICMP messages sent.";
+          }
+          leaf out-errors {
+            type oc-yang:counter64;
+            description
+              "ICMP messages not sent due to errors.";
+          }
+          leaf out-dest-unreachs {
+            type oc-yang:counter64;
+            description
+              "ICMP destination unreachable sent.";
+          }
+          leaf out-time-excds {
+            type oc-yang:counter64;
+            description
+              "ICMP time exceeded sent.";
+          }
+          leaf out-echos {
+            type oc-yang:counter64;
+            description
+              "ICMP echo requests sent.";
+          }
+          leaf out-echo-replies {
+            type oc-yang:counter64;
+            description
+              "ICMP echo replies sent.";
+          }
+          leaf out-redirects {
+            type oc-yang:counter64;
+            description
+              "ICMP redirect messages sent.";
+          }
+        }
+      }
+      container tcp {
+        description
+          "TCP counters for control-plane egress IPv4.";
+        container state {
+          config false;
+          description
+            "TCP egress counters.";
+          leaf out-segs {
+            type oc-yang:counter64;
+            description
+              "TCP segments sent.";
+          }
+          leaf retrans-segs {
+            type oc-yang:counter64;
+            description
+              "TCP segments retransmitted.";
+          }
+          leaf active-opens {
+            type oc-yang:counter64;
+            description
+              "TCP active connection opens.";
+          }
+          leaf attempt-fails {
+            type oc-yang:counter64;
+            description
+              "TCP connection attempt failures.";
+          }
+          leaf estab-resets {
+            type oc-yang:counter64;
+            description
+              "TCP connections reset.";
+          }
+          leaf out-rsts {
+            type oc-yang:counter64;
+            description
+              "TCP RST segments sent.";
+          }
+          leaf tcp-timeouts {
+            type oc-yang:counter64;
+            description
+              "TCP timeouts.";
+          }
+          leaf tcp-syn-retrans {
+            type oc-yang:counter64;
+            description
+              "TCP SYN retransmits.";
+          }
+        }
+      }
+      container udp {
+        description
+          "UDP counters for control-plane egress IPv4.";
+        container state {
+          config false;
+          description
+            "UDP egress counters.";
+          leaf out-datagrams {
+            type oc-yang:counter64;
+            description
+              "UDP datagrams sent.";
+          }
+          leaf sndbuf-errors {
+            type oc-yang:counter64;
+            description
+              "UDP send buffer errors .";
+          }
+        }
+      }
+    }
+  }
+
+  grouping nvidia-ingress-ipv6-counters {
+    description
+      "IPv6 IP-layer and protocol counters under control-plane-traffic ingress.";
+    container ipv6 {
+      description
+        "IPv6 counters for control-plane ingress.";
+      container state {
+        config false;
+        description
+          "IPv6 IP layer counters.";
+        leaf in-receives {
+          type oc-yang:counter64;
+          description
+            "Total number of input IPv6 datagrams received.";
+        }
+        leaf in-addr-errors {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to invalid destination.";
+        }
+        leaf in-delivers {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams successfully delivered to upper layer.";
+        }
+        leaf in-discarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded.";
+        }
+        leaf in-hdr-errors {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to header errors.";
+        }
+        leaf in-unknown-protos {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to unknown protocol.";
+        }
+        leaf in-no-routes {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to no route.";
+        }
+        leaf in-octets {
+          type oc-yang:counter64;
+          description
+            "Total bytes in received IPv6 datagrams.";
+        }
+        leaf in-multicast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 multicast datagrams received.";
+        }
+        leaf in-multicast-octets {
+          type oc-yang:counter64;
+          description
+            "Bytes in IPv6 multicast datagrams.";
+        }
+        leaf in-truncated-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to truncation.";
+        }
+        leaf in-reassembly-ok {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams successfully reassembled.";
+        }
+        leaf in-reassembly-fails {
+          type oc-yang:counter64;
+          description
+            "IPv6 reassembly failures.";
+        }
+        leaf in-reassembly-reqd {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams requiring reassembly.";
+        }
+        leaf in-ce-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams received with CE (Congestion Experienced) marking.";
+        }
+        leaf in-ect0-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams received with ECT(0) marking.";
+        }
+        leaf in-ect1-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams received with ECT(1) marking.";
+        }
+        leaf in-no-ect-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams received with no ECN marking.";
+        }
+      }
+      container icmp {
+        description
+          "ICMPv6 counters for control-plane ingress IPv6.";
+        container state {
+          config false;
+          description
+            "ICMPv6 counters.";
+          leaf in-msgs {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 messages received.";
+          }
+          leaf in-errors {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 messages received with errors.";
+          }
+          leaf in-dest-unreachs {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 destination unreachable received.";
+          }
+          leaf in-time-excds {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 time exceeded received.";
+          }
+          leaf in-echos {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 echo requests received.";
+          }
+          leaf in-echo-replies {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 echo replies received.";
+          }
+          leaf in-neighbor-advertisements {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 neighbor advertisement messages received.";
+          }
+          leaf in-neighbor-solicits {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 neighbor solicitation messages received.";
+          }
+          leaf in-redirects {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 redirect messages received.";
+          }
+          leaf in-router-advertisements {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 router advertisement messages received.";
+          }
+          leaf in-router-solicits {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 router solicitation messages received.";
+          }
+        }
+      }
+      container udp {
+        description
+          "UDP counters for control-plane ingress IPv6.";
+        container state {
+          config false;
+          description
+            "UDPv6 counters.";
+          leaf in-datagrams {
+            type oc-yang:counter64;
+            description
+              "UDPv6 datagrams received.";
+          }
+          leaf in-errors {
+            type oc-yang:counter64;
+            description
+              "UDPv6 datagrams received with errors.";
+          }
+          leaf no-ports {
+            type oc-yang:counter64;
+            description
+              "UDPv6 datagrams to unknown port.";
+          }
+          leaf rcvbuf-errors {
+            type oc-yang:counter64;
+            description
+              "UDPv6 receive buffer errors.";
+          }
+        }
+      }
+    }
+  }
+
+  grouping nvidia-egress-ipv6-counters {
+    description
+      "IPv6 IP-layer and protocol counters under control-plane-traffic egress.";
+    container ipv6 {
+      description
+        "IPv6 counters for control-plane egress.";
+      container state {
+        config false;
+        description
+          "IPv6 IP layer egress counters.";
+        leaf out-requests {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams requested for output.";
+        }
+        leaf out-discarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded on output.";
+        }
+        leaf out-no-routes {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams discarded due to no route.";
+        }
+        leaf out-forwarded-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams forwarded.";
+        }
+        leaf out-frag-ok {
+          type oc-yang:counter64;
+          description
+            "IPv6 datagrams successfully fragmented.";
+        }
+        leaf out-frag-fails {
+          type oc-yang:counter64;
+          description
+            "IPv6 fragmentation failures.";
+        }
+        leaf out-frag-creates {
+          type oc-yang:counter64;
+          description
+            "IPv6 fragments created.";
+        }
+        leaf out-octets {
+          type oc-yang:counter64;
+          description
+            "Total bytes in output IPv6 datagrams.";
+        }
+        leaf out-multicast-pkts {
+          type oc-yang:counter64;
+          description
+            "IPv6 multicast datagrams sent.";
+        }
+        leaf out-multicast-octets {
+          type oc-yang:counter64;
+          description
+            "Bytes in IPv6 multicast datagrams sent.";
+        }
+      }
+      container icmp {
+        description
+          "ICMPv6 counters for control-plane egress IPv6.";
+        container state {
+          config false;
+          description
+            "ICMPv6 egress counters.";
+          leaf out-msgs {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 messages sent.";
+          }
+          leaf out-errors {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 messages not sent due to errors.";
+          }
+          leaf out-dest-unreachs {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 destination unreachable sent.";
+          }
+          leaf out-time-excds {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 time exceeded sent.";
+          }
+          leaf out-echos {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 echo requests sent.";
+          }
+          leaf out-echo-replies {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 echo replies sent.";
+          }
+          leaf out-neighbor-advertisements {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 neighbor advertisement messages sent.";
+          }
+          leaf out-neighbor-solicits {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 neighbor solicitation messages sent.";
+          }
+          leaf out-redirects {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 redirect messages sent.";
+          }
+          leaf out-router-advertisements {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 router advertisement messages sent.";
+          }
+          leaf out-router-solicits {
+            type oc-yang:counter64;
+            description
+              "ICMPv6 router solicitation messages sent.";
+          }
+        }
+      }
+      container udp {
+        description
+          "UDP counters for control-plane egress IPv6.";
+        container state {
+          config false;
+          description
+            "UDPv6 egress counters.";
+          leaf out-datagrams {
+            type oc-yang:counter64;
+            description
+              "UDPv6 datagrams sent.";
+          }
+          leaf sndbuf-errors {
+            type oc-yang:counter64;
+            description
+              "UDPv6 send buffer errors.";
+          }
+        }
+      }
+    }
+  }
+
+  augment "/oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:ingress" {
+    description
+      "Adds control-plane ingress IPv4 and IPv6 counters
+       mapped from node_netstat_* metrics per netstat_to_openconfig_xpath_mapping.";
+
+    uses nvidia-ingress-ipv4-counters;
+    uses nvidia-ingress-ipv6-counters;
+  }
+
+  augment "/oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:egress" {
+    description
+      "Adds control-plane egress IPv4 and IPv6 counters
+       mapped from node_netstat_* metrics per netstat_to_openconfig_xpath_mapping.";
+
+    uses nvidia-egress-ipv4-counters;
+    uses nvidia-egress-ipv6-counters;
+  }
+}
