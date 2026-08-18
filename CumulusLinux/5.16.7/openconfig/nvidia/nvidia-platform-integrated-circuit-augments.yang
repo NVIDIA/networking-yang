@@ -1,0 +1,368 @@
+module nvidia-platform-integrated-circuit-augments {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://nvidia.com/yang/openconfig/platform/integrated-circuit/augments";
+
+  prefix "nvidia-ic-aug";
+
+  import openconfig-platform { prefix oc-platform; }
+  import openconfig-yang-types { prefix oc-yang; }
+  import openconfig-extensions { prefix oc-ext; }
+
+
+  // meta
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig Platform augments for integrated circuit
+     components to support NVIDIA-specific extensions including power consumption
+     monitoring and control plane traffic statistics.
+     Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+     
+  oc-ext:openconfig-version "0.2.0";
+
+  revision "2026-01-09" {
+    description
+      "Added group-name and trap-name for control-plane metrics";
+    reference "1.2.0";
+  }
+
+  revision "2025-12-10" {
+    description
+      "Added control plane traffic statistics";
+    reference "1.1.0";
+  }
+
+  revision "2025-11-19" {
+    description
+      "Initial revision";
+    reference "1.0.0";
+  }
+
+  // OpenConfig specific extensions for module metadata.
+  oc-ext:regexp-posix;
+  oc-ext:catalog-organization "openconfig";
+  oc-ext:origin "openconfig";
+
+  // identity statements
+
+  // typedef statements
+
+  // grouping statements
+
+  grouping power-interval-state {
+    description
+      "Operational state data for power monitoring intervals";
+
+    leaf avg {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units "watts";
+      description
+        "Average power consumption over the specified interval period.";
+    }
+  }
+
+  grouping power-intervals-top {
+    description
+      "Top-level grouping for power monitoring intervals";
+
+    container intervals {
+      description
+        "Container for power monitoring intervals with different time periods";
+
+      list interval {
+        key "period";
+        description
+          "List of power monitoring intervals (e.g., LONG_TERM, SHORT_TERM)";
+
+        leaf period {
+          type string;
+          description
+            "Name identifying the monitoring interval period (e.g., LONG_TERM, SHORT_TERM)";
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state data for power monitoring interval";
+
+          uses power-interval-state;
+        }
+      }
+    }
+  }
+
+  grouping integrated-circuit-power-top {
+    description
+      "Top-level grouping for integrated circuit power consumption monitoring";
+
+    container power {
+      description
+        "Container for integrated circuit power consumption monitoring data";
+
+      uses power-intervals-top;
+    }
+  }
+
+  // Control plane traffic groupings
+  grouping control-plane-ingress-counters {
+    description
+      "Hardware control plane ingress traffic counters";
+
+    container counters {
+      description
+        "Container for control plane ingress counters";
+
+      leaf rx-packets {
+        type oc-yang:counter64;
+        description
+          "Total number of packets received by the control plane
+           at the hardware level.";
+      }
+
+      leaf rx-bytes {
+        type oc-yang:counter64;
+        description
+          "Total number of bytes received by the control plane
+           at the hardware level.";
+      }
+
+      leaf buffer-drops {
+        type oc-yang:counter64;
+        description
+          "Number of packets dropped due to buffer exhaustion
+           in the control plane ingress path. This indicates
+           control plane congestion at the hardware level.";
+      }
+    }
+  }
+
+  grouping control-plane-egress-type-counters {
+    description
+      "Hardware control plane egress traffic counters by packet type";
+
+    container types {
+      description
+        "Container for egress counters organized by traffic type";
+
+      list type {
+        key "type";
+        description
+          "Per-type egress control plane counters";
+
+        leaf type {
+          type string;
+          description
+            "Traffic type identifier (e.g., 'cpu', 'mirror', 'trap')";
+        }
+
+        leaf tx-packets {
+          type oc-yang:counter64;
+          description
+            "Number of packets transmitted for this traffic type";
+        }
+
+        leaf tx-bytes {
+          type oc-yang:counter64;
+          description
+            "Number of bytes transmitted for this traffic type";
+        }
+      }
+    }
+  }
+
+  grouping control-plane-trap-counters {
+    description
+      "Hardware control plane trap statistics";
+
+    container trap-groups {
+      description
+        "Container for trap group statistics";
+
+      list trap-group {
+        key "name";
+        description
+          "Trap group statistics and configuration";
+
+        leaf name {
+          type string;
+          description
+            "Trap group identifier (e.g., 'bgp', 'lacp', 'lldp')";
+        }
+
+        leaf id {
+          type string;
+          description
+            "Trap group ID";
+        }
+
+        container counters {
+          config false;
+          description
+            "Counters for trap group";
+
+          leaf rx-packets {
+            type oc-yang:counter64;
+            description
+              "Number of packets received for this trap group";
+          }
+
+          leaf rx-bytes {
+            type oc-yang:counter64;
+            description
+              "Number of bytes received for this trap group";
+          }
+
+          leaf pkt-violations {
+            type oc-yang:counter64;
+            description
+              "Number of packets that violated rate limits or
+               other constraints for this trap group";
+          }
+        }
+
+        container traps {
+          description
+            "Container for individual trap statistics within the group";
+
+          list trap {
+            key "name";
+            description
+              "Individual trap statistics";
+
+            leaf name {
+              type string;
+              description
+                "Trap name";
+            }
+
+            leaf id {
+              type string;
+              description
+                "Trap identifier";
+            }
+
+            container counters {
+              config false;
+              description
+                "Counters for individual trap";
+
+              leaf rx-packets {
+                type oc-yang:counter64;
+                description
+                  "Number of packets received for this specific trap";
+              }
+
+              leaf rx-bytes {
+                type oc-yang:counter64;
+                description
+                  "Number of bytes received for this specific trap";
+              }
+
+              leaf rx-event-count {
+                type oc-yang:counter64;
+                description
+                  "Number of trap events triggered";
+              }
+
+              leaf rx-drop {
+                type oc-yang:counter64;
+                description
+                  "Number of packets dropped for this specific trap";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  grouping nvidia-spectrum-state {
+    description
+      "NVIDIA Spectrum ASIC control plane state grouping";
+
+    container state {
+      config false;
+      description
+        "Operational state data for Spectrum control plane";
+
+      container ingress {
+        description
+          "Ingress control plane statistics";
+
+        uses control-plane-ingress-counters;
+        uses control-plane-trap-counters;
+      }
+
+      container egress {
+        description
+          "Egress control plane statistics";
+
+        container counters {
+          description
+            "Container for egress counters";
+
+          uses control-plane-egress-type-counters;
+        }
+      }
+    }
+  }
+
+  // augment statements
+  
+  // First augment: Add power and pipeline-counters base structure
+  augment "/oc-platform:components/oc-platform:component/" +
+    "oc-platform:integrated-circuit" {
+    description
+      "Adding power consumption monitoring data and pipeline counters
+       for ASIC components";
+
+    uses integrated-circuit-power-top;
+
+    container pipeline-counters {
+      description
+        "Counters related to packet processing pipeline in the ASIC";
+
+      container control-plane-traffic {
+        description
+          "Hardware-level control plane traffic statistics from the
+           ASIC pipeline. These counters are distinct from software-level
+           control plane statistics and represent traffic as seen by the
+           switching ASIC.";
+
+        container vendor {
+          description
+            "Vendor-specific control plane extensions";
+        }
+      }
+    }
+  }
+
+  // Second augment: Add NVIDIA-specific vendor extensions
+  augment "/oc-platform:components/oc-platform:component/" +
+    "oc-platform:integrated-circuit/pipeline-counters/" +
+    "control-plane-traffic/vendor" {
+    description
+      "Adding NVIDIA vendor-specific control plane extensions";
+
+    container nvidia {
+      description
+        "NVIDIA vendor-specific control plane data";
+
+      container spectrum {
+        description
+          "Spectrum ASIC family specific control plane counters";
+
+        uses nvidia-spectrum-state;
+      }
+    }
+  }
+}
+

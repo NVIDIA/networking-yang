@@ -1,0 +1,702 @@
+module nvidia-qos-augments {
+  namespace "http://nvidia.com/yang/openconfig/qos/augments";
+  prefix nvidia-qos-augments;
+
+  import openconfig-qos {
+    prefix oc-qos;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig QoS augments in NVidia Cumulus OS.
+
+     Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-01-26 {
+    description
+      "Restructured global shared-buffer pools to use separate data and descriptors containers directly under state.
+       Created dedicated groupings for data metrics (bytes) and descriptor metrics (unitless count).";
+    reference
+      "2.1.0";
+  }
+
+  revision 2025-12-14 {
+    description
+      "Restructured priority-group to be under input container.
+       Added comprehensive shared buffer and headroom buffer metrics.
+       Moved watermark metrics under shared-buffer/data containers.
+       Added global shared-buffer with cell-size, pools, and switch-priority.";
+    reference
+      "2.0.0";
+  }
+
+  revision 2025-10-03 {
+    description
+      "Added Support for Interface and Interface TC Packet Trimming Counters";
+    reference
+      "1.5.0";
+  }
+
+  revision 2025-09-16 {
+    description
+      "Added more Traffic Class, Priority Group & Switch Priority Counters.";
+    reference
+      "1.4.0";
+  }
+
+  revision 2025-07-16 {
+    description
+      "Changed watermark-max to max-queue-len-cells and added max-queue-len for Traffic Class configurations.";
+    reference
+      "1.3.0";
+  }
+
+  revision 2025-06-02 {
+    description
+      "Add Packet Trimming Counters.";
+    reference
+      "1.2.0";
+  }
+
+  revision 2025-04-11 {
+    description
+      "Add WRED discards and no buffer UC discards.";
+    reference
+      "1.1.0";
+  }
+
+  revision 2025-02-13 {
+    description
+      "Initial qos augment file.";
+    reference
+      "1.0.0";
+  }
+
+  // ============================================================
+  // SHARED BUFFER GROUPINGS
+  // ============================================================
+
+  grouping shared-buffer-data-metrics {
+    description
+      "Grouping for shared buffer data occupancy metrics in bytes.";
+
+    leaf instant-occupancy {
+      type uint64;
+      units bytes;
+      description
+        "Instantaneous shared-buffer data occupancy in bytes.";
+    }
+
+    leaf max-occupancy-since-last-sample {
+      type uint64;
+      units bytes;
+      description
+        "Maximum shared-buffer data occupancy in bytes during the most recent sampling interval.";
+    }
+
+    leaf max-occupancy {
+      type oc-yang:counter64;
+      units bytes;
+      description
+        "Maximum shared-buffer data occupancy in bytes since the last watermark reset; software-maintained.";
+    }
+
+    leaf max-occupancy-timestamp {
+      type uint64;
+      units seconds;
+      description
+        "Timestamp at which the highest shared-buffer data occupancy was recorded since the last watermark reset.
+         Value is Unix epoch seconds (UTC).";
+    }
+
+    leaf time-since-last-clear {
+      type uint64;
+      units milliseconds;
+      description
+        "Elapsed time in milliseconds since watermark counters were last cleared.";
+    }
+  }
+
+  grouping shared-buffer-descriptor-metrics {
+    description
+      "Grouping for shared buffer descriptor occupancy metrics as count of descriptors.";
+
+    leaf instant-occupancy {
+      type uint64;
+      description
+        "Instantaneous shared-buffer descriptor occupancy as number of descriptors.";
+    }
+
+    leaf max-occupancy-since-last-sample {
+      type uint64;
+      description
+        "Maximum shared-buffer descriptor occupancy as number of descriptors during the most recent sampling interval.";
+    }
+
+    leaf max-occupancy {
+      type oc-yang:counter64;
+      description
+        "Maximum shared-buffer descriptor occupancy as number of descriptors since the last watermark reset; software-maintained.";
+    }
+
+    leaf max-occupancy-timestamp {
+      type uint64;
+      units seconds;
+      description
+        "Timestamp at which the highest shared-buffer descriptor occupancy was recorded since the last watermark reset.
+         Value is Unix epoch seconds (UTC).";
+    }
+
+    leaf time-since-last-clear {
+      type uint64;
+      units milliseconds;
+      description
+        "Elapsed time in milliseconds since watermark counters were last cleared.";
+    }
+  }
+
+  grouping shared-buffer-data-descriptors {
+    description
+      "Grouping for shared buffer with data and descriptors containers.";
+
+    container shared-buffer {
+      description
+        "Shared buffer metrics container.";
+
+      container data {
+        description
+          "Shared buffer data metrics in bytes.";
+        uses shared-buffer-data-metrics;
+      }
+
+      container descriptors {
+        description
+          "Shared buffer descriptor metrics as count of descriptors.";
+        uses shared-buffer-descriptor-metrics;
+      }
+    }
+  }
+
+  // ============================================================
+  // HEADROOM BUFFER GROUPINGS
+  // ============================================================
+
+  grouping headroom-buffer-metrics {
+    description
+      "Common grouping for headroom buffer occupancy metrics.";
+    
+    leaf instant-occupancy {
+      type uint64;
+      units bytes;
+      description
+        "Instantaneous headroom-buffer occupancy in bytes.";
+    }
+
+    leaf max-occupancy-since-last-sample {
+      type uint64;
+      units bytes;
+      description
+        "Maximum headroom-buffer occupancy in bytes during the most recent sampling interval.";
+    }
+
+    leaf max-occupancy {
+      type oc-yang:counter64;
+      units bytes;
+      description
+        "Maximum headroom-buffer occupancy in bytes since the last watermark reset; software-maintained.";
+    }
+
+    leaf max-occupancy-timestamp {
+      type uint64;
+      units seconds;
+      description
+        "Timestamp at which the highest headroom-buffer occupancy was recorded since the last watermark reset. 
+         Value is Unix epoch seconds (UTC).";
+    }
+
+    leaf time-since-last-clear {
+      type uint64;
+      units milliseconds;
+      description
+        "Elapsed time in milliseconds since watermark counters were last cleared.";
+    }
+  }
+
+  grouping headroom-buffer-list {
+    description
+      "Grouping for headroom buffer list with buffer types.";
+
+    list headroom-buffer {
+      key "buffer-type";
+      description
+        "List of headroom buffers by buffer type (primary or secondary).";
+
+      leaf buffer-type {
+        type enumeration {
+          enum primary {
+            description "Primary headroom buffer.";
+          }
+          enum secondary {
+            description "Secondary headroom buffer.";
+          }
+        }
+        description
+          "Type of headroom buffer.";
+      }
+
+      list priority-group {
+        key "pg-id";
+        description
+          "List of priority groups for this headroom buffer type.";
+
+        leaf pg-id {
+          type uint8;
+          description
+            "Priority group identifier.";
+        }
+
+        container state {
+          description
+            "State information for headroom buffer priority group.";
+          uses headroom-buffer-metrics;
+        }
+      }
+
+      container state {
+        description
+          "State information for headroom buffer at interface level.";
+        uses headroom-buffer-metrics;
+      }
+    }
+  }
+
+  // ============================================================
+  // POOL GROUPING
+  // ============================================================
+
+  grouping pool-list {
+    description
+      "Grouping for pool list with shared buffer metrics.";
+
+    list pool {
+      key "id";
+      description
+        "List of buffer pools.";
+
+      leaf id {
+        type uint8;
+        description
+          "Pool identifier.";
+      }
+
+      container state {
+        description
+          "State information for the pool.";
+        uses shared-buffer-data-descriptors;
+      }
+    }
+  }
+
+  // ============================================================
+  // MULTICAST GROUPING
+  // ============================================================
+
+  grouping multicast-shared-buffer {
+    description
+      "Grouping for multicast shared buffer metrics.";
+
+    container multicast {
+      description
+        "Shared buffer data metrics for multicast traffic.";
+      uses shared-buffer-data-metrics;
+    }
+  }
+
+  // ============================================================
+  // SWITCH PRIORITY GROUPING
+  // ============================================================
+
+  grouping nvidia-switch-priority {
+    description
+      "Grouping for defining the switch-priority related counters.";
+    list switch-priority {
+        description
+          "Switch Priority related counters.";
+
+        key "priority";
+
+        leaf priority {
+          type uint8;
+        }
+
+        container state {
+          description
+            "State information for switch priority.";
+
+          leaf in-pause-duration {
+            type uint64;
+            units milliseconds;
+            description
+              "The total time in milliseconds that transmission of packets
+              to the far-end port have been paused.";
+          }
+
+          leaf out-pause-duration {
+            type uint64;
+            units milliseconds;
+            description
+              "The total time in milliseconds that the far-end port has been
+              requested to pause.";
+          }
+
+          container counters {
+            description 
+              "Container for switch priority counters.";
+    
+            leaf in-pause-pkts {
+              type oc-yang:counter64;
+              description
+                "The total number of PAUSE frames received from the
+                far-end port.";
+            }
+
+            leaf out-pause-pkts {
+              type oc-yang:counter64;
+              description
+                "The total number of PAUSE (counted on prio0) or PFC frames
+                sent to the far-end port.";
+            }
+
+            leaf in-discards {
+              type oc-yang:counter64;
+              description
+                "The number of inbound packets which were chosen to be discarded
+                even though no errors had been detected to prevent their being
+                deliverable to a higher-layer protocol.";
+            }
+
+          }
+        }
+    }
+  }
+
+  // ============================================================
+  // PRIORITY GROUP GROUPING (RESTRUCTURED)
+  // ============================================================
+
+  grouping nvidia-priority-group {
+    description
+      "Grouping for defining the priority-group related counters.";
+    list priority-group {
+        description
+          "Priority Group related counters.";
+
+        key "pg-id";
+        leaf pg-id {
+          type uint8;
+          description
+            "Priority group identifier.";
+        }
+
+        container state {
+          description
+            "State information for priority group.";
+
+          container counters {
+            description
+              "Container for priority group counters.";
+
+            leaf in-pkts {
+              type oc-yang:counter64;
+              units packets;
+              description
+                "The number of packets received at Ingress for a given priority group.";
+            }
+
+            leaf in-octets {
+              type oc-yang:counter64;
+              units octets;
+              description
+                "The number of octets of data received at Ingress for a given priority group.";
+            }
+          }
+
+          uses shared-buffer-data-descriptors;
+        }
+    }
+  }
+
+  // ============================================================
+  // PACKET TRIMMING GROUPING
+  // ============================================================
+
+  grouping nvidia-packet-trimming {
+    description
+      "Grouping for defining packet trimming related counters.";
+    container packet-trimming {
+      description
+        "Container for packet trimming related counters.";
+
+      container state {
+        description
+          "State information for packet trimming.";
+
+        container counters {
+          description
+            "Counters for packet trimming.";
+
+          leaf trimmed-unicast-pkts {
+            type oc-yang:counter64;
+            description
+              "The number of packets that were trimmed.";
+          }
+
+          leaf trimmed-tx-unicast-pkts {
+            type oc-yang:counter64;
+            description
+              "The number of trimmed unicast packets that were transmitted.";
+          }
+        }
+      }
+    }
+  }
+
+  // ============================================================
+  // AUGMENT: QoS Root (Packet Trimming + Global Shared Buffer)
+  // ============================================================
+
+  augment "/oc-qos:qos" {
+    description
+      "Adds packet trimming counters and global shared buffer at the QoS root level.";
+    
+    uses nvidia-packet-trimming;
+
+    container shared-buffer {
+      description
+        "Global shared buffer configuration and state.";
+
+      list switch-priority {
+        key "priority";
+        description
+          "List of switch priorities for multicast traffic.";
+
+        leaf priority {
+          type uint8;
+          description
+            "Switch priority identifier.";
+        }
+
+        container state {
+          description
+            "State information for multicast traffic at switch priority level.";
+          uses shared-buffer-data-metrics;
+        }
+      }
+
+      container pools {
+        description
+          "Container for global buffer pools.";
+
+        list pool {
+          key "id";
+          description
+            "List of global buffer pools.";
+
+          leaf id {
+            type uint8;
+            description
+              "Pool identifier.";
+          }
+
+          container state {
+            description
+              "State information for the global pool.";
+
+            container data {
+              description
+                "Shared buffer data pool metrics in bytes.";
+              uses shared-buffer-data-metrics;
+            }
+
+            container descriptors {
+              description
+                "Shared buffer descriptor pool metrics as count of descriptors.";
+              uses shared-buffer-descriptor-metrics;
+            }
+          }
+        }
+      }
+
+      container state {
+        description
+          "Global shared buffer state.";
+
+        leaf cell-size {
+          type oc-yang:counter64;
+          units bytes;
+          description
+            "Shared-buffer allocation cell size in bytes; use to convert cell-based counters to bytes.";
+        }
+      }
+    }
+  }
+
+  // ============================================================
+  // AUGMENT: Interface Level (Switch Priority + Packet Trimming)
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface" {
+      description
+        "Adds switch priority and packet trimming related counters at interface level.";
+
+      uses nvidia-switch-priority;
+      uses nvidia-packet-trimming;
+  }
+
+  // ============================================================
+  // AUGMENT: Input (Priority Groups + Pools + Headroom Buffers)
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input" {
+      description
+        "Adds priority groups, ingress pools, and headroom buffers to input.";
+
+      uses nvidia-priority-group;
+
+      container pools {
+        description
+          "Container for ingress buffer pools.";
+        uses pool-list;
+      }
+
+      uses headroom-buffer-list;
+  }
+
+  // ============================================================
+  // AUGMENT: Output Queue State
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/" + 
+          "oc-qos:queues/oc-qos:queue/oc-qos:state" {
+
+    description
+      "Augment queue state parameters with shared buffer metrics and various counters.";
+
+    uses shared-buffer-data-descriptors;
+
+    leaf no-buffer-uc-dropped-pkts {
+      type oc-yang:counter64;
+      description
+        "The number of unicast packets dropped due to lack of shared
+        buffer resources.";
+    }
+
+    leaf wred-dropped-pkts {
+      type oc-yang:counter64;
+      description
+        "The number of packets that are dropped by the Weighted Random
+        Early Detection (WRED) function.";
+    }
+
+    leaf trimmed-unicast-pkts {
+      type oc-yang:counter64;
+      description
+        "The number of unicast packets that were trimmed for this queue.";
+    }
+
+    leaf instant-queue-len {
+      type oc-yang:counter64;
+      description
+        "Contains the transmit queue depth in bytes on traffic class selected
+        by traffic_class of the port selected by local_port.";
+    }
+
+    leaf transmit-unicast-pkts {
+      type oc-yang:counter64;
+      description
+        "Number of unicast packets transmitted by this queue.";
+
+    }
+  }
+
+  // ============================================================
+  // AUGMENT: Output (Pools)
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output" {
+    description
+      "Adds egress pools to output.";
+
+    container pools {
+      description
+        "Container for egress buffer pools.";
+      uses pool-list;
+    }
+  }
+
+  // ============================================================
+  // AUGMENT: Output State (Multicast Shared Buffer)
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:state" {
+    description
+      "Adds multicast shared buffer metrics to output state.";
+
+    container shared-buffer {
+      description
+        "Shared buffer metrics for output interface.";
+      uses multicast-shared-buffer;
+    }
+  }
+
+  // ============================================================
+  // AUGMENT: Packet Trimming Output Queues
+  // ============================================================
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/packet-trimming" {
+    description
+      "Adds output queues container to packet-trimming for per-queue trimming stats.";
+
+    container output {
+      description
+        "Container for output queue packet trimming statistics.";
+
+      container queues {
+        description
+          "Container for packet trimming statistics per output queue.";
+
+        list queue {
+          key "name";
+          description
+            "List of output queues with packet trimming statistics.";
+
+          leaf name {
+            type leafref {
+              path "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:name";
+            }
+            description
+              "Reference to the queue name.";
+          }
+
+          container state {
+            description
+              "State information for queue packet trimming statistics.";
+
+            leaf trimmed-unicast-pkts {
+              type oc-yang:counter64;
+              description
+                "The number of unicast packets that were trimmed for this specific queue.";
+            }
+          }
+        }
+      }
+    }
+  }
+}
