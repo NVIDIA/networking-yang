@@ -1,0 +1,145 @@
+module nvidia-system-controlplane-augments {
+  namespace "http://nvidia.com/yang/openconfig/system-controlplane/augments";
+  prefix nvidia-system-controlplane-augments;
+
+  import openconfig-system {
+    prefix oc-sys;
+  }
+  import openconfig-system-controlplane {
+    prefix oc-sys-copp;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig System controlplane augments in NVidia Cumulus OS.
+
+     Copyright (c) 2024 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-05-13 {
+    description
+      "Tidy up description.";
+  }
+  
+  revision 2025-02-13 {
+    description
+      "Initial system augment file.";
+    reference
+      "1.0.0";
+  }
+
+  grouping nvidia-ingress-ipv4-counters {
+    description
+      "Grouping for defining the control plane ingress ipv4 related counters.";
+    container ipv4 {
+        description
+          "ipv4 related counters.";
+
+        container counters {
+            description 
+              "Container for ipv4 counters.";
+    
+            leaf in-ipv4-pkts {
+              type oc-yang:counter64;
+              description 
+                "The total number of input IPv4 datagrams received in software including those received in error."; 
+            }
+            leaf in-ipv4-addr-errors {
+              type oc-yang:counter64;
+              description 
+                "The number of input IPv4 datagrams discarded in software because the IP address in their 
+                IP header's destination field was not a valid address to be received at this entity."; 
+            }
+        }
+    }
+  }
+
+  grouping nvidia-ingress-ipv6-counters {
+    description
+      "Grouping for defining the control plane ingress ipv6 related counters.";
+    container ipv6 {
+        description
+          "ipv6 related counters.";
+
+        container counters {
+            description 
+              "Container for ipv6 counters.";
+            leaf in-ipv6-pkts {
+              type oc-yang:counter64;
+              description 
+                "The total number of input IPv6 datagrams received in software including those received in error."; 
+            }
+            leaf in-ipv6-addr-errors {
+              type oc-yang:counter64;
+              description 
+                "The number of input IPv6 datagrams discarded in software because the IP address in their 
+                IP header's destination field was not a valid address to be received at this entity."; 
+            }               
+        }
+    }
+  }
+
+  grouping nvidia-egress-ipv4-counters {
+    description
+      "Grouping for defining the control plane egress ipv4 related counters.";
+    container ipv4 {
+        description
+          "ipv4 related counters.";
+
+        container counters {
+            description 
+              "Container for ipv4 counters.";
+    
+            leaf out-ipv4-pkts {
+              type oc-yang:counter64;
+              description 
+                "The total number of datagrams successfully delivered to IPv4 user-protocols (including ICMP)."; 
+            }            
+        }
+    }
+  }
+
+  grouping nvidia-egress-ipv6-counters {
+    description
+      "Grouping for defining the control plane egress ipv6 related counters.";
+    container ipv6 {
+        description
+          "ipv6 related counters.";
+
+        container counters {
+            description 
+              "Container for ipv6 counters.";
+    
+            leaf out-ipv6-pkts {
+              type oc-yang:counter64;
+              description 
+                "The total number of datagrams successfully delivered to IPv6 user-protocols (including ICMP)."; 
+            }
+    
+        }
+    }
+  }
+
+  augment "/oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:ingress" {
+      description
+        "Adds Control Plane Ingress Ipv4/Ipv6 related counters.";
+
+      uses nvidia-ingress-ipv4-counters;
+      uses nvidia-ingress-ipv6-counters;
+  }
+
+  augment "/oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:egress" {
+      description
+        "Adds Control Plane Egress Ipv4/Ipv6 related counters.";
+
+      uses nvidia-egress-ipv4-counters;
+      uses nvidia-egress-ipv6-counters;
+  }
+
+}
