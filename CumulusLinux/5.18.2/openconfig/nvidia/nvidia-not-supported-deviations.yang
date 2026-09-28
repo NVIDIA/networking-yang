@@ -1,0 +1,2247 @@
+module nvidia-not-supported-deviations {
+  namespace "http://nvidia.com/yang/not-supported-deviations";
+  prefix nvidia-not-supported-dev;
+
+  import ietf-interfaces {
+    prefix if;
+  }
+
+  import nvidia-if-ethernet-augments {
+    prefix nvidia-if-eth-augments;
+  }
+
+  import nvidia-if-phy-augments {
+    prefix nvidia-if-phy-augments;
+  }
+
+  import nvidia-network-instance-augments {
+    prefix nvidia-ni-augments;
+  }
+
+  import nvidia-platform-integrated-circuit-augments {
+    prefix nvidia-ic-aug;
+  }
+
+  import nvidia-platform-storage-augments {
+    prefix oc-storage-augments;
+  }
+
+  import nvidia-qos-augments {
+    prefix nvidia-qos-augments;
+  }
+
+  import nvidia-system-augments {
+    prefix nvidia-system-aug;
+  }
+
+  import nvidia-wjh {
+    prefix nvidia-wjh;
+  }
+
+  import openconfig-acl {
+    prefix oc-acl;
+  }
+
+  import openconfig-alarms {
+    prefix oc-alarms;
+  }
+
+  import openconfig-bfd {
+    prefix oc-bfd;
+  }
+
+  import openconfig-defined-sets {
+    prefix oc-sets;
+  }
+
+  import openconfig-if-8021x {
+    prefix oc-1x;
+  }
+
+  import openconfig-if-aggregate {
+    prefix oc-lag;
+  }
+
+  import openconfig-if-ethernet {
+    prefix oc-eth;
+  }
+
+  import openconfig-if-rates {
+    prefix oc-if-rates;
+  }
+
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+
+  import openconfig-keychain {
+    prefix oc-keychain;
+  }
+
+  import openconfig-lldp {
+    prefix oc-lldp;
+  }
+
+  import openconfig-network-instance {
+    prefix oc-netinst;
+  }
+
+  import openconfig-platform {
+    prefix oc-platform;
+  }
+
+  import openconfig-platform-pipeline-counters {
+    prefix oc-ppc;
+  }
+
+  import openconfig-platform-port {
+    prefix oc-port;
+  }
+
+  import openconfig-platform-psu {
+    prefix oc-platform-psu;
+  }
+
+  import openconfig-platform-storage {
+    prefix oc-storage;
+  }
+
+  import openconfig-platform-transceiver {
+    prefix oc-transceiver;
+  }
+
+  import openconfig-qos {
+    prefix oc-qos;
+  }
+
+  import openconfig-routing-policy {
+    prefix oc-rpol;
+  }
+
+  import openconfig-system {
+    prefix oc-sys;
+  }
+
+  import openconfig-system-controlplane {
+    prefix oc-sys-copp;
+  }
+
+  import openconfig-vlan {
+    prefix oc-vlan;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains not-supported deviations.
+
+    Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-08-08 {
+    description
+      "Auto-generated not-supported deviations for unsupported paths";
+  }
+
+  deviation /if:interfaces {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /if:interfaces-state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /nvidia-wjh:wjh/nvidia-wjh:channels/nvidia-wjh:channel/nvidia-wjh:state/nvidia-wjh:aggregated-events {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /nvidia-wjh:wjh/nvidia-wjh:channels/nvidia-wjh:channel/nvidia-wjh:state/nvidia-wjh:overflow-events {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:actions/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:config/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:input-interface {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:icmpv4/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:icmpv4/oc-acl:state/oc-acl:code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:destination-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:dscp-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:length {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv4/oc-acl:state/oc-acl:source-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:icmpv6/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:icmpv6/oc-acl:state/oc-acl:code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:destination-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:destination-flow-label {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:dscp-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:length {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:source-address-prefix-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:ipv6/oc-acl:state/oc-acl:source-flow-label {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:l2/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:mpls {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:matched-octets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:state/oc-acl:matched-packets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:builtin-detail {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:destination-port-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:detail-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:explicit-detail-match-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:transport/oc-acl:state/oc-acl:source-port-set {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:config/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:acl-sets/oc-acl:acl-set/oc-acl:state/oc-acl:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:interface-ref {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-acl:acl/oc-acl:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-bfd:bfd {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:ber/nvidia-if-phy-augments:state/nvidia-if-phy-augments:raw-ber {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:channels/nvidia-if-phy-augments:channel/nvidia-if-phy-augments:state/nvidia-if-phy-augments:id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:fec/nvidia-if-phy-augments:state/nvidia-if-phy-augments:fec-mode-request {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:fec/nvidia-if-phy-augments:state/nvidia-if-phy-augments:profile-fec-in-use {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:fec/nvidia-if-phy-augments:state/nvidia-if-phy-augments:zero-hist {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:infiniband {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:link-down-information/nvidia-if-phy-augments:state/nvidia-if-phy-augments:intentional-events {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:link-down-information/nvidia-if-phy-augments:state/nvidia-if-phy-augments:total-events {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:link-down-information/nvidia-if-phy-augments:state/nvidia-if-phy-augments:unintentional-events {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:nvlink {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:operation-information {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:recovery-information {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/nvidia-if-phy-augments:phy/nvidia-if-phy-augments:state/nvidia-if-phy-augments:time-since-last-clear-min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/nvidia-if-eth-augments:phy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:state/oc-1x:authenticate-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:state/oc-1x:max-requests {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:state/oc-1x:retransmit-interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:state/oc-1x:server-fail-vlan {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-1x:dot1x/oc-1x:state/oc-1x:supplicant-timeout {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-8021q-frames {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-block-errors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-carrier-errors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-interrupted-tx {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-late-collision {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-mac-control-frames {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-mac-errors-rx {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:in-single-collision {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:out-8021q-frames {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:out-mac-control-frames {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters/oc-eth:out-mac-errors-tx {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:duplex-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:enable-flow-control {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:fec-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:standalone-link-training {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-lag:aggregate-id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-vlan:switched-vlan {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if-rates:rates/oc-if-rates:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if-rates:rates/oc-if-rates:state/oc-if-rates:load-interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-if:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-if:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-if:loopback-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-if:mtu {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-if:type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:config/oc-vlan:tpid {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:hold-time/oc-if:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:hold-time/oc-if:state/oc-if:down {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:hold-time/oc-if:state/oc-if:up {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:penalty-based-aied {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:counters/oc-if:in-fcs-errors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:counters/oc-if:last-clear {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:counters/oc-if:resets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:cpu {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:logical {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:loopback-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:management {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-port:hardware-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-transceiver:physical-channel {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:state/oc-vlan:tpid {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-if:subinterfaces {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-lag:aggregation {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-if:interfaces/oc-if:interface/oc-vlan:routed-vlan {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-keychain:keychains {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:config/oc-lldp:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:capabilities/oc-lldp:capability/oc-lldp:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:custom-tlvs {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:neighbors/oc-lldp:neighbor/oc-lldp:state/oc-lldp:last-update {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:state/oc-lldp:counters {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:interfaces/oc-lldp:interface/oc-lldp:state/oc-lldp:name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:state/oc-lldp:counters {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:state/oc-lldp:hello-timer {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-lldp:lldp/oc-lldp:state/oc-lldp:suppress-tlv-advertisement {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/nvidia-ni-augments:srv6/nvidia-ni-augments:sids/nvidia-ni-augments:sid/nvidia-ni-augments:state/nvidia-ni-augments:id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:afts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:config/oc-netinst:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:config/oc-netinst:fallback-network-instance {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:config/oc-netinst:route-distinguisher {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:config/oc-netinst:router-id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:config/oc-netinst:type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:connection-points {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:encapsulation {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:evpn {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:fdb {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:inter-instance-policies {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:interfaces {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:mpls {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:policy-forwarding {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:afi-safis {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:apply-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:confederation {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:default-route-distance {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:dynamic-neighbor-prefixes {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:graceful-restart {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:route-selection-options {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:state/oc-netinst:as {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:state/oc-netinst:total-paths {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:state/oc-netinst:total-prefixes {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:global/oc-netinst:use-multiple-paths {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:add-paths {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:apply-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:config/oc-netinst:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:config/oc-netinst:send-community-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:graceful-restart {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:ipv4-labeled-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:ipv4-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:ipv6-labeled-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:ipv6-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l2vpn-evpn {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l2vpn-vpls {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l3vpn-ipv4-multicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l3vpn-ipv4-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l3vpn-ipv6-multicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:l3vpn-ipv6-unicast {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:srte-policy-ipv4 {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:srte-policy-ipv6 {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:state/oc-netinst:active {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:state/oc-netinst:afi-safi-name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:state/oc-netinst:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:state/oc-netinst:send-community-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:afi-safis/oc-netinst:afi-safi/oc-netinst:use-multiple-paths {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:apply-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:as-path-options {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:auth-password {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:local-as {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:neighbor-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:peer-as {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:peer-group {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:peer-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:remove-private-as {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:route-flap-damping {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:send-community {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:config/oc-netinst:send-community-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:ebgp-multihop {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:enable-bfd {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:error-handling {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:graceful-restart {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:logging-options {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:route-reflector {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:auth-password {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:dynamically-configured {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:last-prefix-limit-exceeded {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:received/oc-netinst:NOTIFICATION {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:received/oc-netinst:last-notification-error-subcode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:received/oc-netinst:last-notification-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:sent/oc-netinst:NOTIFICATION {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:sent/oc-netinst:last-notification-error-subcode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:messages/oc-netinst:sent/oc-netinst:last-notification-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:neighbor-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:remove-private-as {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:route-flap-damping {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:send-community {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:send-community-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:state/oc-netinst:supported-capabilities {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:timers {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:local-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:mtu-discovery {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:passive-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:remote-address {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:remote-port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:transport/oc-netinst:state/oc-netinst:tcp-mss {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:neighbors/oc-netinst:neighbor/oc-netinst:use-multiple-paths {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:peer-groups {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:bgp/oc-netinst:rib {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:config/oc-netinst:default-metric {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:config/oc-netinst:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:igmp {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:isis {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:local-aggregates {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:ospfv2 {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:pcep {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:pim {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:protocols/oc-netinst:protocol/oc-netinst:static-routes {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:route-limits {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:segment-routing {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:table-connections {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:tables/oc-netinst:table/oc-netinst:state/oc-netinst:address-family {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:tables/oc-netinst:table/oc-netinst:state/oc-netinst:protocol {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-netinst:network-instances/oc-netinst:network-instance/oc-netinst:vlans {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:backplane {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:chassis {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:controller-card {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:cpu {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:fabric {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:fan/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/nvidia-ic-aug:power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:config/oc-platform:used-threshold-upper {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:config/oc-platform:used-threshold-upper-clear {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:state/oc-platform:committed {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:state/oc-platform:name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:state/oc-platform:used-threshold-upper {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:state/oc-platform:used-threshold-upper-clear {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-platform:utilization/oc-platform:resources/oc-platform:resource/oc-platform:state/oc-platform:used-threshold-upper-exceeded {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:control-plane-traffic/oc-ppc:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:drop {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:errors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/oc-ppc:pipeline-counters/oc-ppc:packet {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:port {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:power-supply/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:power-supply/oc-platform:state/oc-platform-psu:enabled {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:properties {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:software-module {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-failure {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-alarms:equipment-mismatch {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:allocated-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:base-mac-address {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:clei-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:empty {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:id {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:install-component {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:install-position {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-poweroff-reason {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-poweroff-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-reason {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:last-switchover-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:location {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:memory {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:mfg-date {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:mfg-name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:parent {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:pcie {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:redundant-role {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:removable {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:switchover-ready {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:state/oc-platform:used-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage-augments:total-size {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:end-to-end-error {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:life-left {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:offline-uncorrectable-sectors-count {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:percentage-used {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:reallocated-sectors {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:storage/oc-platform:state/oc-storage:counters/oc-storage:soft-read-error-rate {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-platform:subcomponents {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:host-lanes/oc-transceiver:lane/oc-transceiver:state/oc-transceiver:lane-number {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:associated-optical-channel {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:target-output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:config/oc-transceiver:tx-laser {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:associated-optical-channel {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:description {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:index {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:input-power/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-age {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-bias-current/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:laser-temperature {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-frequency {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:output-power/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:target-frequency-deviation {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:target-output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tec-current {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tx-failure {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:physical-channels/oc-transceiver:channel/oc-transceiver:state/oc-transceiver:tx-laser {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:connector-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:ethernet-pmd-preconf {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fault-condition {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-corrected-bits {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-corrected-bytes {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-mode {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-status {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-uncorrectable-blocks {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:fec-uncorrectable-words {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:form-factor-preconf {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:input-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:laser-bias-current {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:module-functional-type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:otn-compliance-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:output-power {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:post-fec-ber {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:pre-fec-ber {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:sonet-sdh-compliance-code {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:avg {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:interval {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:max-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:state/oc-transceiver:supply-voltage/oc-transceiver:min-time {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:thresholds/oc-transceiver:threshold/oc-transceiver:state/oc-transceiver:laser-temperature-lower {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-platform:components/oc-platform:component/oc-transceiver:transceiver/oc-transceiver:thresholds/oc-transceiver:threshold/oc-transceiver:state/oc-transceiver:laser-temperature-upper {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/nvidia-qos-augments:packet-trimming/nvidia-qos-augments:state/nvidia-qos-augments:counters/nvidia-qos-augments:trimmed-tx-unicast-pkts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:buffer-allocation-profiles {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:classifiers {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:forwarding-groups {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:classifiers {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:queues {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:scheduler-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:input/oc-qos:virtual-output-queues {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:interface-ref {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:classifiers {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:config/oc-qos:queue-management-profile {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/nvidia-qos-augments:trimmed-unicast-pkts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:avg-queue-len {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:dropped-octets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:dropped-pkts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:ecn-marked-octets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:ecn-selected-octets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:ecn-selected-pkts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state/oc-qos:queue-management-profile {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:scheduler-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:state/oc-qos:buffer-allocation-profile {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:state/oc-qos:multicast-buffer-allocation-profile {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:state/oc-qos:unicast-buffer-allocation-profile {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:queue-management-profiles {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:queues {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:scheduler-policies {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-qos:qos/oc-qos:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-rpol:routing-policy {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sets:defined-sets {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/nvidia-system-aug:dot1x/nvidia-system-aug:supplicant {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:egress/oc-sys-copp:acl {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:ingress/oc-sys-copp:acl {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys-copp:control-plane-traffic/oc-sys-copp:ingress/oc-sys-copp:qos {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:accounting {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:authentication {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:authorization {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:config/oc-sys:type {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:config/oc-sys:timeout {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state/oc-sys:retransmit-attempts {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state/oc-sys:secret-key {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state/oc-sys:secret-key-hashed {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:tacacs {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:state {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:alarms {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:clock {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:dns {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:license {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:logging {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:mac-address {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:memory/oc-sys:config {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:memory/oc-sys:state/oc-sys:counters {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:messages {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:ntp {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state/oc-sys:args {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:ssh-server {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/nvidia-system-aug:contact {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/nvidia-system-aug:location {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/oc-sys:domain-name {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/oc-sys:last-configuration-timestamp {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/oc-sys:login-banner {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:state/oc-sys:motd-banner {
+    description "Not supported";
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:telnet-server {
+    description "Not supported";
+    deviate not-supported;
+  }
+}

@@ -1,0 +1,45 @@
+module nvidia-if-types {
+  yang-version 1;
+
+  namespace "http://nvidia.com/yang/interfaces/types";
+  prefix nvidia-if-types;
+
+  import iana-if-type {
+    prefix ianaift;
+  }
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "Vendor-specific interface type identities (IANA ifType extension) for use
+     with OpenConfig interfaces, for example /interfaces/interface/config/type.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-04-21 {
+    description
+      "Initial revision: NVLink and InfiniBand plane port interface types.";
+    reference "1.0.0";
+  }
+
+  oc-ext:openconfig-version "1.0.0";
+
+  identity nvlink {
+    base ianaift:iana-interface-type;
+    description
+      "NVIDIA NVLink interface type for high-speed GPU interconnect.";
+  }
+
+  identity infiniband-plane-port {
+    base ianaift:iana-interface-type;
+    description
+      "InfiniBand plane port: switch interface for one plane (for example
+       swXpYplN) of a logical InfiniBand aggregated-port (for example swXpY).";
+  }
+}

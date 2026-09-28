@@ -1,0 +1,189 @@
+module nvidia-system-image-augments {
+  yang-version "1";
+  namespace "http://nvidia.com/yang/openconfig/system/image/augments";
+  prefix nvidia-system-image-aug;
+
+  import openconfig-system {
+    prefix oc-sys;
+    revision-date 2024-09-24;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module contains NVIDIA-specific augmentations to the OpenConfig
+     system model for system image and partition state.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-06-19 {
+    description
+      "Add ONIE staged installer state. Change next-boot target to
+       string (0=ONIE, 1=partition1, 2=partition2).";
+    reference
+      "1.1.0";
+  }
+
+  revision 2026-03-12 {
+    description
+      "Initial version: add system image partitions and state.";
+    reference
+      "1.0.0";
+  }
+
+  augment "/oc-sys:system" {
+    description
+      "Adds image and partitions hierarchy for NVIDIA system image state.";
+
+    container image {
+      config false;
+      description
+        "Container for system image and partition information.";
+
+      container partitions {
+        description
+          "Container for the list of image partitions.";
+
+        list partition {
+          key "id";
+          config false;
+          description
+            "List of image partitions. Partition id identifies the partition
+             (e.g., 1, 2).";
+
+          leaf id {
+            type string;
+            description
+              "Partition id.";
+          }
+
+          container state {
+            config false;
+            description
+              "Operational state for the image partition.";
+
+            leaf build-id {
+              type string;
+              description
+                "Image build identifier.";
+            }
+
+            leaf description {
+              type string;
+              description
+                "Image description.";
+            }
+
+            leaf disk {
+              type string;
+              description
+                "Location of the image partition on the disk.";
+            }
+
+            leaf release {
+              type string;
+              description
+                "Software release.";
+            }
+          }
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state for the partitions container.";
+
+          leaf current {
+            type leafref {
+              path "/oc-sys:system/nvidia-system-image-aug:image/nvidia-system-image-aug:partitions/nvidia-system-image-aug:partition/nvidia-system-image-aug:id";
+            }
+            description
+              "Reference to the currently active partition id.";
+          }
+
+          leaf next {
+            type string;
+            description
+              "String-encoded next boot target: 0=ONIE, 1=partition1, 2=partition2.";
+          }
+        }
+      }
+
+      container onie {
+        config false;
+        description
+          "State for an image staged or activated via ONIE when ONIE is
+           selected for next boot.";
+
+        container state {
+          config false;
+          description
+            "Operational state for image installation options staged via ONIE.";
+
+          leaf mode {
+            type enumeration {
+              enum install {
+                description
+                  "Image is staged for installation via ONIE.";
+              }
+              enum activated {
+                description
+                  "Image staged via ONIE is activated for installation on the
+                   next reboot.";
+              }
+            }
+            description
+              "Image installation mode via ONIE.";
+          }
+
+          leaf description {
+            type string;
+            description
+              "Description of the image staged via ONIE.";
+          }
+
+          leaf release {
+            type string;
+            description
+              "Software release of the image staged via ONIE.";
+          }
+
+          leaf build-id {
+            type string;
+            description
+              "Build identifier of the image staged via ONIE.";
+          }
+
+          leaf build-date {
+            type string;
+            description
+              "Build date of the image staged via ONIE.";
+          }
+
+          leaf ztp-url {
+            type string;
+            description
+              "URL of the staged zero touch provisioning (ZTP) script.";
+          }
+
+          leaf startup-url {
+            type string;
+            description
+              "Path or URL of the staged startup.yaml (NVUE) file.";
+          }
+
+          leaf installer-url {
+            type string;
+            description
+              "URL of the image staged for installation via ONIE.";
+          }
+        }
+      }
+    }
+  }
+}

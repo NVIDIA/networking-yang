@@ -1,0 +1,395 @@
+module nvidia-if-ethernet-augments {
+  namespace "http://nvidia.com/yang/openconfig/interfaces/ethernet/augments";
+  prefix nvidia-if-eth-augments;
+
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+  import openconfig-if-ethernet {
+    prefix oc-eth;
+  }
+  import openconfig-if-ethernet-ext {
+    prefix oc-eth-ext;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module contains OpenConfig Ethernet Interface augments in NVidia Cumulus OS.
+
+     Copyright (c) 2024 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2025-09-16 {
+    description
+      "Added additional ethernet specific counters.";
+    reference
+      "1.1.0";
+  }
+
+  revision 2025-02-13 {
+    description
+      "Initial ethernet interface augment file.";
+    reference
+      "1.0.0";
+  }
+
+  grouping nvidia-ethernet-out-frames-size-dist {
+    description
+      "Grouping for defining the size distribution of the frames
+      transmitted";
+    container out-distribution {
+        description
+          "The size distribution of the transmitted frames.";
+
+        leaf out-frames-64-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were 64 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-65-127-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 65 and 127 bytes in length (excluding framing
+            bits but including FCS bytes).";
+        }
+
+        leaf out-frames-128-255-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 128 and 255 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-256-511-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 256 and 511 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-512-1023-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 512 and 1023 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-1024-1518-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 1024 and 1518 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-1519-2047-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 1519 and 2047 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-2048-4095-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 2048 and 4095 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-4096-8191-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 4096 and 8191 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+
+        leaf out-frames-8192-9216-octets {
+          type oc-yang:counter64;
+          description
+            "Number of packets (including bad packets) transmitted that
+            were between 8192 and 9216 bytes in length (excluding framing bits but
+            including FCS bytes).";
+        }
+    }
+  }
+
+  grouping nvidia-phy-stats{
+    description 
+      "Grouping PHY Stats.";
+
+    container phy {
+        description
+          "Container for all PHY related Stats of an interface.";
+        
+        container state {
+            description
+              "Contains all PHY related stats counters.";
+
+            list lane {
+              key "lane";
+
+              description 
+                "Enclosing container for the list of lanes associated with
+                a PHY of an interface.";
+
+              leaf lane {
+                type uint8;
+                description
+                  "Lane number (0,1,2,....)";
+              }
+
+              leaf fc-fec-corrected-blocks {
+                type oc-yang:counter64;
+                description
+                  "The number FC FEC corrected blocks for a given lane of
+                  an interface.";
+              }
+
+              leaf fc-fec-uncorrected-blocks {
+                type oc-yang:counter64;
+                description
+                  "The number of FC FEC uncorrectable blocks for a given
+                  lane of an interface.";
+              }
+
+              leaf rs-fec-corrected-symbols {
+                type oc-yang:counter64;
+                description
+                  "The number RS FEC corrected symbols for a given lane
+                  of an interface.";
+              }
+
+              leaf raw-errors {
+                type oc-yang:counter64;
+                description
+                  "The number of phy error bits that were identified 
+                  for a given lane of an interface.";
+              }
+
+              leaf raw-ber {
+                type decimal64 {
+                  fraction-digits 18;
+                }
+                description
+                  "The number of phy bit error rate for a given lane 
+                  of an interface.";
+              }
+
+            }
+
+            leaf rs-fec-uncorrectable-blocks {
+              type oc-yang:counter64;
+              description
+                "The number of RS FEC uncorrectable blocks of an interface.";
+            }
+
+            leaf rs-fec-single-error-blocks {
+              type oc-yang:counter64;
+              description
+                "The number of RS FEC single errors blocks of an interface.";
+            }
+
+            leaf rs-fec-no-error-blocks {
+              type oc-yang:counter64;
+              description
+                "The number of RS FEC no errors blocks of an interface.";
+            }
+
+            leaf received-bits {
+              type oc-yang:counter64;
+              description
+                "The number of phy total bits received of an interface.";
+            }
+
+            leaf corrected-bits {
+              type oc-yang:counter64;
+              description
+                "The number of phy corrected bits of an interface by FEC engine.";
+            }
+
+            leaf effective-errors {
+              type oc-yang:counter64;
+              description
+                "The number of phy effective errors of an interface.";
+            }
+
+            leaf effective-ber {
+              type decimal64 {
+                  fraction-digits 18;
+                }
+              description
+                "The Phy effective BER of an interface.";
+            }
+
+            leaf symbol-errors {
+              type oc-yang:counter64;
+              description
+                "The number of phy number of symbol errors of an interface.";
+            }
+
+            leaf symbol-ber {
+              type decimal64 {
+                  fraction-digits 18;
+                }
+              description
+                "The Phy symbol BER of an interface.";
+            }
+
+            leaf fec-time-since-last-clear {
+              type uint64;
+              units "milliseconds";
+              description
+                "Time since last clear of FEC stats(phy layer).";
+            }
+
+            leaf ber-time-since-last-clear {
+              type uint64;
+              units "milliseconds";
+              description
+                "Time since last clear of BER stats(phy layer stats).";
+            }
+
+        }
+    }
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet" {
+    description 
+      "Add FEC statistics.";
+    
+    uses nvidia-phy-stats;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/oc-eth:counters" {
+    description
+      "Add additional ingress/egress interface counters.";
+
+    leaf in-fcs-errors {
+      type oc-yang:counter64;
+      description
+        "A count of frames received that are an integral number of octets 
+        in length but do not pass the FCS check. This count does not include 
+        frames received with frame-too-long or frame-tooshort errors.";
+    }
+
+    leaf pkt-drop-events-probe-resource-lack {
+      type oc-yang:counter64;
+      description
+        "The total number of events in which packets were dropped by the probe
+        due to lack of resources.";
+    }
+
+    leaf out-stp-filter-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at egress due to STP filter.";
+    }
+
+    leaf out-vlan-membership-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at egress due to VLAN membership filter.";
+    }
+
+    leaf in-vlan-tag-allowance-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at ingress due to VLAN tag allowance filter.";
+    }
+
+    leaf in-link-down-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at ingress due to egress link down.";
+    }
+
+    leaf in-vlan-membership-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at ingress due to VLAN membership filter.";
+    }
+
+    leaf in-loopback-drops {
+      type oc-yang:counter64;
+      description
+        "Number of packets dropped at ingress due to loopback filter.";
+    }
+
+    leaf no-buffer-multicast-dropped-pkts {
+      type oc-yang:counter64;
+      description
+        "The number of multicast packets dropped due to lack of egress buffer resources.";
+    }
+
+    leaf pkts-payload-internal-checksum-errors {
+      type oc-yang:counter64;
+      description
+        "A counter for packet payload internal checksum errors.";
+    }
+
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/oc-eth:state/" +
+    "oc-eth:counters/oc-eth-ext:in-distribution" {
+    description
+      "Add additional size distribution counters of the received frames.";
+
+    leaf in-frames-1519-2047-octets {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were
+        between 1519 and 2047 bytes in length (excluding framing bits
+        but including FCS bytes).";
+    }
+
+    leaf in-frames-2048-4095-octets {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were
+        between 2048 and 4095 bytes in length (excluding framing bits
+        but including FCS bytes).";
+    }
+
+    leaf in-frames-4096-8191-octets {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were
+        between 4096 and 8191 bytes in length (excluding framing bits
+        but including FCS bytes).";
+    }
+
+    leaf in-frames-8192-9216-octets {
+      type oc-yang:counter64;
+      description
+        "Number of good and bad packets received that were
+        between 8192 and 9216 bytes in length (excluding framing bits
+        but including FCS bytes).";
+    }
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/" +
+    "oc-eth:state/oc-eth:counters" {
+      description
+        "Adds size distribution of the frames transmitted
+        to the ethernet counters";
+
+      uses nvidia-ethernet-out-frames-size-dist;
+  }
+
+}
