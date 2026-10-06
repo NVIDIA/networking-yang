@@ -1,0 +1,429 @@
+module nvidia-system-aaa-radius-augments {
+  yang-version "1";
+  namespace "http://nvidia.com/yang/openconfig/system/aaa/radius/augments";
+  prefix nvidia-aaa-radius-aug;
+
+  import openconfig-system {
+    prefix oc-sys;
+  }
+
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "This module augments OpenConfig system AAA RADIUS server state with
+     RADIUS authentication and accounting metrics. These metrics are
+     currently reported for RADIUS servers used by 802.1X deployments.
+
+     The metrics are based on the RADIUS Authentication Client MIB
+     (RFC 2618) and RADIUS Accounting Client MIB (RFC 2620).
+
+     These per-server metrics consist of counters, which are cumulative
+     across all 802.1X interfaces, and gauges, which are point-in-time
+     values.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-06-08 {
+    description
+      "Initial version";
+    reference
+      "1.0.0";
+  }
+
+  // Add NVIDIA 802.1X RADIUS server counters as siblings of the existing OpenConfig
+  // upstream counter leaves (access-accepts, access-rejects, retried-access-requests,
+  // timeout-access-requests).
+  augment "/oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state/oc-sys:counters" {
+    description
+      "Add 802.1X RADIUS server counters. Per-server, aggregated across
+       all 802.1X-enabled interfaces.";
+
+    // ---------- Authentication (access-*) counters ----------
+
+    leaf access-requests {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Access-Request packets sent to the server.
+         This does not include retransmissions.
+
+         Retransmissions are counted by 'retried-access-requests'.";
+    }
+
+    leaf access-challenges {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Access-Challenge packets (valid or invalid)
+         received from the server.";
+    }
+
+    leaf access-malformed-responses {
+      type oc-yang:counter64;
+      description
+        "The number of malformed RADIUS Access-Response packets received
+         from the server. Malformed packets include packets with an
+         invalid length.
+
+         Failing to parse as a structurally valid RADIUS message (bad length
+         field or malformed attribute TLV) classifies the packet as a
+         malformed response.
+
+         Bad authenticators or unknown types are not included as malformed
+         access responses.";
+    }
+
+    leaf access-bad-authenticators {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Access-Response packets containing invalid
+         authenticators or invalid signature attributes received from the
+         server.
+
+         Indicates that the packet parsing was successful but the packet
+         failed cryptographic integrity validation against the configured
+         shared secret.
+
+         An example is a packet having shared-secret mismatch between the
+         switch and the RADIUS server, or an injected/spoofed packet.";
+    }
+
+    leaf access-unknown-types {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS packets of unknown type which were received
+         from the server on the authentication port.
+
+         Indicates parse was successful and matched a pending RADIUS
+         request, but no registered RADIUS receive handler recognized
+         the packet. None of them had any record of having issued the
+         request the response belongs to (reasons: supplicant disconnected /
+         aged out / already cleaned up).";
+    }
+
+    leaf access-packets-dropped {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS packets which were received from the server
+         on the authentication port and dropped.
+
+         Packets can be dropped either because the UDP frame exceeds the
+         maximum RADIUS packet size or because the parsed response has no
+         matching pending request.";
+    }
+
+    leaf access-connection-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures encountered when trying to reach the RADIUS
+         server: either transport setup toward the server or the send itself
+         (e.g., no route, host unreachable).";
+    }
+
+    leaf access-receive-errors {
+      type oc-yang:counter64;
+      description
+        "Error encountered while receiving the RADIUS server response on the
+         per 802.1X interface.";
+    }
+
+    leaf access-vrf-bind-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures binding to the server's configured VRF - the VRF
+         interface could be absent or not up.";
+    }
+
+    leaf access-initialization-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures (re)initializing the local RADIUS transport on
+         behalf of the server - covers transport allocation, local address
+         binding, address-family selection (no usable transport of the
+         server's address family), and attachment for I/O.
+
+         Distinct from connection-errors: 'the transport could not be built'
+         vs 'the built transport could not reach the server.'";
+    }
+
+    leaf access-out-queue-drops {
+      type oc-yang:counter64;
+      description
+        "Number of outbound RADIUS requests to the server that could not be
+         enqueued on the local retransmit queue - either the per-entry
+         allocation failed (out-of-memory) or the queue was at capacity.
+
+         Transmit side counterpart to RFC 2618's Receive side
+         packets-dropped; an increasing value indicates memory pressure or
+         sustained request load exceeding queue capacity.";
+    }
+
+    // ---------- Accounting (accounting-*) counters ----------
+
+    leaf accounting-requests {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Accounting-Request packets sent. This does
+         not include retransmissions.
+
+         Sent to the server for 802.1X related session events.
+         Retransmissions are counted by 'accounting-retransmissions'.
+
+         This is the aggregate counter; per-message-type breakdown is
+         provided by 'accounting-start-requests', 'accounting-stop-requests',
+         and 'accounting-interim-update-requests'. The aggregate counter also
+         includes Accounting-On and Accounting-Off messages, for which there
+         are no dedicated leaves (unlike Start, Interim-Update, and Stop).";
+    }
+
+    leaf accounting-start-requests {
+      type oc-yang:counter64;
+      description
+        "Number of RADIUS Accounting-Request packets that the switch sends
+         to the RADIUS server with Acct-Status-Type = Start (per-station
+         session start).
+
+         NAS-level Accounting-On events are not counted here; they only
+         contribute to the aggregate 'accounting-requests' counter.";
+    }
+
+    leaf accounting-interim-update-requests {
+      type oc-yang:counter64;
+      description
+        "Number of RADIUS Accounting-Request packets that the switch sends
+         to the RADIUS server with Acct-Status-Type = Interim-Update
+         (updates driven by the accounting interim interval).
+
+         These are sent between the Start and Stop and are spaced apart by
+         the accounting interim interval that the RADIUS server may choose
+         to set - by default unset, so they are not sent by default. If the
+         configured interval is below the switch's minimum, it is ignored and
+         no Interim-Update is sent.";
+    }
+
+    leaf accounting-stop-requests {
+      type oc-yang:counter64;
+      description
+        "Number of RADIUS Accounting-Request packets that the switch sends
+         to the RADIUS server with Acct-Status-Type = Stop (per-station
+         session stop).
+
+         NAS-level Accounting-Off events are not counted here; they only
+         contribute to the aggregate 'accounting-requests' counter.";
+    }
+
+    leaf accounting-retransmissions {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Accounting-Request packets retransmitted to
+         the RADIUS accounting server. Retransmissions include retries where
+         the Identifier and Acct-Delay-Time have been updated, as well as
+         those
+         in which they remain the same.
+
+         Initial (non-retried) requests are counted separately by
+         'accounting-requests'; timeouts are counted by
+         'accounting-timeouts'.
+
+         Each retransmission also increments 'accounting-timeouts' - the two
+         counters track in lockstep on every retry attempt.";
+    }
+
+    leaf accounting-responses {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS packets received on the accounting port from
+         the server.
+
+         Indicates the server has acknowledged the corresponding
+         Accounting-Request, which is counted by 'accounting-requests'.";
+    }
+
+    leaf accounting-timeouts {
+      type oc-yang:counter64;
+      description
+        "The number of accounting timeouts to the server. After a timeout
+         the client may retry to the same server, send to a different
+         server, or give up. A retry to the same server is counted as a
+         retransmit as well as a timeout. A send to a different server is
+         counted as an Accounting-Request as well as a timeout.
+
+         See 'accounting-retransmissions' - the two counters track together
+         on retry attempts.";
+    }
+
+    leaf accounting-malformed-responses {
+      type oc-yang:counter64;
+      description
+        "The number of malformed RADIUS Accounting-Response packets received
+         from the server. Malformed packets include packets with an invalid
+         length.
+
+         Failing to parse as a structurally valid RADIUS message (bad length
+         field or malformed attribute TLV) classifies the packet as a
+         malformed response.
+
+         Bad authenticators or unknown types are not included as malformed
+         accounting responses; they are counted separately by
+         'accounting-bad-authenticators' and 'accounting-unknown-types'
+         respectively.";
+    }
+
+    leaf accounting-bad-authenticators {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS Accounting-Response packets containing
+         invalid authenticators received from the server.
+
+         Indicates that the packet parsing was successful but the packet
+         failed cryptographic integrity validation against the configured
+         shared secret.
+
+         An example is a packet having shared-secret mismatch between the
+         switch and the RADIUS server, or a spoofed/tampered
+         Accounting-Response.";
+    }
+
+    leaf accounting-unknown-types {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS packets of unknown type which were received
+         from the server on the accounting port.
+
+         Indicates parse was successful and matched a pending RADIUS
+         request, but no registered RADIUS receive handler recognized
+         the packet. None of them had any record of having issued the
+         request the response belongs to (reasons: supplicant disconnected /
+         aged out / already cleaned up).";
+    }
+
+    leaf accounting-packets-dropped {
+      type oc-yang:counter64;
+      description
+        "The number of RADIUS packets which were received from the server
+         on the accounting port and dropped.
+
+         Packets can be dropped either because the UDP frame exceeds the
+         maximum RADIUS packet size or because the parsed response has no
+         matching pending request.";
+    }
+
+    leaf accounting-connection-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures encountered when trying to reach the RADIUS
+         server: either transport setup toward the server or the send itself
+         (e.g., no route, host unreachable).";
+    }
+
+    leaf accounting-receive-errors {
+      type oc-yang:counter64;
+      description
+        "Error encountered while receiving the RADIUS server response on the
+         per 802.1X interface.";
+    }
+
+    leaf accounting-vrf-bind-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures binding to the server's configured VRF - the VRF
+         interface could be absent or not up.";
+    }
+
+    leaf accounting-initialization-errors {
+      type oc-yang:counter64;
+      description
+        "Number of failures (re)initializing the local RADIUS transport on
+         behalf of the server - covers transport allocation, local address
+         binding, address-family selection (no usable transport of the
+         server's address family), and attachment for I/O.
+
+         Distinct from connection-errors: 'the transport could not be built'
+         vs 'the built transport could not reach the server.'";
+    }
+
+    leaf accounting-out-queue-drops {
+      type oc-yang:counter64;
+      description
+        "Number of outbound RADIUS requests to the server that could not be
+         enqueued on the local retransmit queue - either the per-entry
+         allocation failed (out-of-memory) or the queue was at capacity.
+
+         Transmit side counterpart to RFC 2620's Receive side
+         packets-dropped; an increasing value indicates memory pressure or
+         sustained request load exceeding queue capacity.";
+    }
+  }
+
+  // Augment AAA RADIUS server state with 802.1X gauges (instantaneous
+  // values, not monotonic counters). Placed directly under /state rather
+  // than under /state/counters because they are not counters.
+  augment "/oc-sys:system/oc-sys:aaa/oc-sys:server-groups/oc-sys:server-group/oc-sys:servers/oc-sys:server/oc-sys:radius/oc-sys:state" {
+    description
+      "Add 802.1X RADIUS server gauges.";
+
+    leaf access-pending-requests {
+      type uint32;
+      description
+        "The number of RADIUS Access-Request packets sent to the server that
+         have not yet received a response. This count increments when an
+         Access-Request is sent and decrements when a matching Access-Accept,
+         Access-Reject or Access-Challenge is received, or after the maximum
+         number of retransmit attempts is reached without a response.
+         Ordinary timeouts and retransmissions do not decrement this count;
+         the request stays pending until either a matching response is
+         received or the final retransmit attempt is reached.
+
+         Aggregated across all 802.1X interfaces.";
+    }
+
+    leaf accounting-pending-requests {
+      type uint32;
+      description
+        "The number of RADIUS Accounting-Request packets sent to the server
+         that have not yet received a response. This count increments when an
+         Accounting-Request is sent and decrements when a matching
+         Accounting-Response is received. For Start and Stop messages,
+         ordinary timeouts and retransmissions do not decrement this count;
+         the request stays pending until a matching Accounting-Response is
+         received or the final retransmit attempt is reached. An
+         Interim-Update message is removed on its first timeout without
+         retrying.
+
+         Aggregated across all 802.1X interfaces.";
+    }
+
+    leaf access-round-trip-time {
+      type uint32;
+      units "milliseconds";
+      description
+        "Round-trip time, in milliseconds, between the most recent
+         Access-Request sent to the server and the corresponding
+         Access-Response received.
+
+         This variable is last-observed across all 802.1X interfaces and is
+         updated whenever a matching Access-Accept, Access-Reject or
+         Access-Challenge is received on any of those interfaces.";
+    }
+
+    leaf accounting-round-trip-time {
+      type uint32;
+      units "milliseconds";
+      description
+        "Round-trip time, in milliseconds, between the most recent
+         Accounting-Request sent to the server and the corresponding
+         Accounting-Response received.
+
+         This variable is last-observed across all 802.1X interfaces and is
+         updated whenever a matching Accounting-Response is received on any
+         of those interfaces.";
+    }
+  }
+}

@@ -1,0 +1,212 @@
+module nvidia-platform-software-package-augments {
+
+  yang-version "1";
+
+  namespace "http://nvidia.com/yang/openconfig/platform/software-package/augments";
+
+  prefix "nvidia-platform-sw-pkg-aug";
+
+  import openconfig-platform {
+    prefix oc-platform;
+  }
+
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+
+  organization
+    "Nvidia https://www.nvidia.com";
+
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+
+  description
+    "This module augments the OpenConfig platform component model with
+     operational state for NOS platform software package archives managed
+     by the micro-update manager.
+
+     Each software package archive is represented as a platform inventory
+     component keyed by archive-id:
+
+       /components/component[name=<archive-id>]/state/name
+       /components/component[name=<archive-id>]/software-package-archive/state/
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision "2026-06-15" {
+    description
+      "Initial revision";
+    reference
+      "1.0.0";
+  }
+
+  oc-ext:regexp-posix;
+  oc-ext:catalog-organization "openconfig";
+  oc-ext:origin "openconfig";
+
+  typedef software-package-archive-failure-state {
+    type enumeration {
+      enum "NONE" {
+        value 0;
+        description
+          "No failure occured";
+      }
+      enum "PRE_INSTALL_FAILED_ROLLBACK_SUCCESSFULL" {
+        value 1;
+        description
+          "Pre-install hook failed; rolled back to baseline.";
+      }
+      enum "PRE_INSTALL_FAILED_ROLLBACK_FAILED" {
+        value 2;
+        description
+          "Pre-install hook failed; rollback failed.";
+      }
+      enum "PRE_INSTALL_FAILED_ROLLBACK_IN_PROGRESS" {
+        value 3;
+        description
+          "Pre-install hook failed; rollback in progress.";
+      }
+      enum "APT_FAILED_ROLLBACK_SUCCESSFULL" {
+        value 4;
+        description
+          "APT transaction failed; rolled back to baseline.";
+      }
+      enum "APT_FAILED_ROLLBACK_FAILED" {
+        value 5;
+        description
+          "APT transaction failed; rollback failed.";
+      }
+      enum "APT_FAILED_ROLLBACK_IN_PROGRESS" {
+        value 6;
+        description
+          "APT transaction failed; rollback in progress.";
+      }
+      enum "POST_INSTALL_FAILED_ROLLBACK_SUCCESSFULL" {
+        value 7;
+        description
+          "Post-install hook failed; rolled back to baseline.";
+      }
+      enum "POST_INSTALL_FAILED_ROLLBACK_FAILED" {
+        value 8;
+        description
+          "Post-install hook failed; rollback failed.";
+      }
+      enum "POST_INSTALL_FAILED_ROLLBACK_IN_PROGRESS" {
+        value 9;
+        description
+          "Post-install hook failed; rollback in progress.";
+      }
+      enum "UNKNOWN_FAILURE_ROLLBACK_SUCCESSFULL" {
+        value 10;
+        description
+          "Install failed; rolled back to baseline.";
+      }
+      enum "UNKNOWN_FAILURE_ROLLBACK_FAILED" {
+        value 11;
+        description
+          "Install failed; rollback failed.";
+      }
+      enum "UNKNOWN_FAILURE_ROLLBACK_IN_PROGRESS" {
+        value 12;
+        description
+          "Install failed; rollback in progress.";
+      }
+    }
+    description
+      "Enumerated install failure state for archive installation
+       failures.  0: none, 1-12: known install failure patterns.";
+  }
+
+  typedef software-package-archive-status {
+    type enumeration {
+      enum "not-installed" {
+        value 0;
+        description
+          "The archive is not installed.";
+      }
+      enum "installed" {
+        value 1;
+        description
+          "The archive is fully installed.";
+      }
+      enum "partially-installed" {
+        value 2;
+        description
+          "The archive is partially installed.";
+      }
+      enum "failed" {
+        value 3;
+        description
+          "Archive installation or operation failed.";
+      }
+      enum "operation-in-progress" {
+        value 4;
+        description
+          "An install, uninstall, or other archive operation is in progress.";
+      }
+    }
+    description
+      "Installation status of a platform software package archive.
+       0: not-installed, 1: installed, 2: partially-installed,
+       3: failed, 4: operation-in-progress.";
+  }
+
+  grouping software-package-archive-state {
+    description
+      "Operational state for a platform software package archive.";
+
+    leaf failure-state {
+      type software-package-archive-failure-state;
+      description
+        "Enumerated install failure state.  Returns NONE (0) when no
+         failure-reason is available or the reason does not match a known
+         install failure pattern.";
+    }
+
+    leaf status {
+      type software-package-archive-status;
+      description
+        "Current installation status of the archive.";
+    }
+
+    leaf installed-at {
+      type uint64;
+      units "seconds";
+      description
+        "Unix epoch timestamp in seconds when the archive was installed.
+         Zero when the archive has never been installed or the time is
+         not available.";
+    }
+  }
+
+  grouping software-package-archive-top {
+    description
+      "Top-level container for platform software package archive data.";
+
+    container software-package-archive {
+      description
+        "Operational data for a NOS platform software package archive.";
+
+      container state {
+        config false;
+        description
+          "Operational state data for the software package archive.";
+
+        uses software-package-archive-state;
+      }
+    }
+  }
+
+  augment "/oc-platform:components/oc-platform:component" {
+    description
+      "Add software package archive operational state to platform
+       components representing NOS package archives.  Implementations
+       SHOULD only populate this container for components keyed by
+       archive-id.";
+
+    uses software-package-archive-top;
+  }
+}

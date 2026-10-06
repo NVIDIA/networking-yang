@@ -1,0 +1,176 @@
+module nvidia-system-services-augments {
+  yang-version "1";
+  namespace "http://nvidia.com/yang/openconfig/system/services/augments";
+  prefix nvidia-svc-aug;
+
+  import openconfig-system { prefix oc-sys; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-yang-types { prefix oc-yang; }
+
+  organization
+    "NVIDIA Corporation";
+
+  contact
+    "NVIDIA Corporation
+     www.nvidia.com";
+
+  description
+    "Adds a new /system/services container for systemd unit (service-level)
+     monitoring. Service-level metrics provide aggregate views (CPU, memory,
+     thread count). Process details are referenced via leaf-refs to
+     /system/processes/process to avoid data duplication.
+
+     Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-05-13 {
+    description
+      "Tidy up description.";
+  }
+
+  revision 2026-02-03 {
+    description
+      "Initial revision: service-level container with 11 metrics and
+       leaf-refs to processes.";
+    reference
+      "1.0.0";
+  }
+
+  typedef systemd-unit-state-type {
+    type enumeration {
+      enum active {
+        description "Unit is active.";
+      }
+      enum inactive {
+        description "Unit is inactive.";
+      }
+      enum failed {
+        description "Unit has failed.";
+      }
+      enum activating {
+        description "Unit is in the process of activating.";
+      }
+      enum deactivating {
+        description "Unit is in the process of deactivating.";
+      }
+    }
+    description
+      "Systemd unit state.";
+  }
+
+  augment "/oc-sys:system" {
+    description
+      "Add systemd services container for service-level monitoring.";
+
+    container services {
+      config false;
+      description
+        "Container for systemd unit (service) monitoring.";
+
+      list service {
+        key "name";
+        description
+          "List of monitored systemd services (units).";
+
+        leaf name {
+          type leafref {
+            path "../state/name";
+          }
+          description
+            "Reference to the service name in state.";
+        }
+
+        container state {
+          config false;
+          description
+            "State parameters for this service.";
+
+          leaf name {
+            type string;
+            description
+              "Service (unit) name.";
+          }
+
+          leaf main-pid {
+            type leafref {
+              path "/oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:pid";
+            }
+            description
+              "PID of the main process for this service.";
+          }
+
+          leaf unit-state {
+            type systemd-unit-state-type;
+            description
+              "Current state of the systemd unit.";
+          }
+
+          leaf running {
+            type boolean;
+            description
+              "True when the unit is active and running.";
+          }
+
+          leaf exe-path {
+            type string;
+            description
+              "Executable path of the main process.";
+          }
+
+          leaf restart-count {
+            type oc-yang:counter64;
+            description
+              "Number of times the service has been restarted.";
+          }
+
+          leaf cpu-usage {
+            type oc-yang:counter64;
+            units "nanoseconds";
+            description
+              "Aggregate CPU time used by all processes in this service.";
+          }
+
+          leaf memory-usage-bytes {
+            type uint64;
+            units "bytes";
+            description
+              "Aggregate memory usage across all service processes.";
+          }
+
+          leaf start-time {
+            type oc-types:timeticks64;
+            description
+              "Service start time (e.g., since epoch).";
+          }
+
+          leaf uptime {
+            type oc-types:timeticks64;
+            description
+              "Time since the service was started.";
+          }
+
+          leaf thread-count {
+            type uint32;
+            description
+              "Aggregate thread count across all processes in this service.";
+          }
+
+          leaf process-count {
+            type uint32;
+            description
+              "Number of processes belonging to this service.";
+          }
+
+          leaf-list process-pid {
+            type leafref {
+              path "/oc-sys:system/oc-sys:processes/oc-sys:process/" +
+                   "oc-sys:pid";
+            }
+            description
+              "References to processes belonging to this service.
+               Process details are read from /system/processes/process.";
+          }
+        }
+      }
+    }
+  }
+}

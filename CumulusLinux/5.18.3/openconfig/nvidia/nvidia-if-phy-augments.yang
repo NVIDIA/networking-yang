@@ -1,0 +1,870 @@
+module nvidia-if-phy-augments {
+  yang-version 1;
+
+  // namespace
+  namespace "http://nvidia.com/yang/interfaces/phy/augments";
+  prefix nvidia-if-phy-augments;
+
+  // import statements
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+  import openconfig-yang-types {
+    prefix oc-yang;
+  }
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+  import iana-if-type {
+    prefix ianaift;
+  }
+  import nvidia-if-types {
+    prefix nvidia-if-types;
+  }
+
+  // meta
+  organization
+    "Nvidia https://www.nvidia.com";
+  contact
+    "NVIDIA CORPORATION & AFFILIATES
+     www.nvidia.com";
+  description
+    "This module augments OpenConfig interfaces with physical layer diagnostic (PHY) information.
+     
+     Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.";
+
+  revision 2026-04-20 {
+    description
+      "Moved interface type identities to nvidia-if-types; reference them in
+       PHY container when statements.";
+    reference "1.0.2";
+  }
+
+  revision 2026-02-11 {
+    description
+      "Added NVLink6 recovery monitoring metrics.";
+    reference "1.0.1";
+  }
+
+  revision 2025-11-27 {
+    description
+      "Added successful-recovery-events leaf.";
+    reference "1.0.0";
+  }
+
+  revision 2025-08-01 {
+    description
+      "Initial revision";
+    reference "1.0.0";
+  }
+
+  // extension statements
+  oc-ext:openconfig-version "1.0.2";
+
+  grouping nvidia-phy-state {
+    description
+      "Grouping for PHY general state information";
+    
+    leaf time-since-last-clear-min {
+      type uint64;
+      units "minutes";
+      description
+        "Time since the last clear in minutes.";
+    }
+    
+    leaf effective-errors {
+      type oc-yang:counter64;
+      description
+        "The number of phy effective errors of an interface.";
+    }
+    
+    leaf received-bits {
+      type oc-yang:counter64;
+      description
+        "The number of phy total bits received of an interface.";
+    }
+    
+    leaf symbol-errors {
+      type oc-yang:counter64;
+      description
+        "The number of phy number of symbol errors of an interface.";
+    }
+  }
+
+  grouping nvidia-phy-ber-state {
+    description
+      "Grouping for BER information";
+    
+    leaf effective-ber {
+      type decimal64 {
+        fraction-digits 18;
+      }
+      description
+        "PHY Effective BER of an interface.";
+    }
+    
+    leaf symbol-ber {
+      type decimal64 {
+        fraction-digits 18;
+      }
+      description
+        "PHY Symbol BER of an interface.";
+    }
+    
+    leaf raw-ber {
+      type decimal64 {
+        fraction-digits 18;
+      }
+      description
+        "PHY Raw BER of an interface.";
+    }
+    
+    leaf ber-time-since-last-clear {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time since last clear of BER stats (phy layer stats).";
+    }
+  }
+
+  grouping nvidia-phy-fec-state {
+    description
+      "Grouping for FEC information";
+    
+    leaf fec-mode-request {
+      type uint16;
+      description
+        "FEC mode request.";
+    }
+    
+    leaf profile-fec-in-use {
+      type uint16;
+      description
+        "FEC profile in use.";
+    }
+    
+    leaf fec-time-since-last-clear {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time since last clear of FEC stats(phy layer).";
+    }
+    
+    leaf zero-hist {
+      type oc-yang:counter64;
+      description
+        "First FEC histogram bin with value of 0 while all higher
+         bins are only with 0 value as well. It identifies the 
+         first FEC block histogram bin where errors drop to zero, 
+         ensuring the link is free from latent signal integrity issues.";
+    }
+    
+    leaf corrected-bits {
+      type oc-yang:counter64;
+      description
+        "The number of phy corrected bits of an interface by FEC engine.";
+    }
+    
+    leaf rs-fec-no-error-blocks {
+      type oc-yang:counter64;
+      description
+        "The number of RS FEC no errors blocks of an interface.";
+    }
+    
+    leaf rs-fec-single-error-blocks {
+      type oc-yang:counter64;
+      description
+        "The number of RS FEC single errors blocks of an interface.";
+    }
+    
+    leaf rs-fec-uncorrectable-blocks {
+      type oc-yang:counter64;
+      description
+        "The number of RS FEC uncorrectable blocks of an interface.";
+    }
+  }
+
+  grouping nvidia-phy-histograms-state {
+    description
+      "Grouping for histogram information";
+    
+    list rs-num-corr-err {
+      key "upper-boundary";
+      description
+        "List of RS FEC corrected error histogram bins";
+      
+      leaf upper-boundary {
+        type uint32;
+        description
+          "Upper boundary of the histogram bin";
+      }
+      
+      leaf count {
+        type oc-yang:counter64;
+        description
+          "Count of corrected errors in this bin";
+      }
+    }
+  }
+
+  grouping nvidia-phy-channel-state {
+    description
+      "Grouping for per-channel information";
+    
+    leaf id {
+      type uint8;
+      description
+        "Channel identifier";
+    }
+    
+    leaf raw-errors {
+      type oc-yang:counter64;
+      description
+        "The number of phy error bits that were identified for this channel.";
+    }
+    
+    leaf fc-fec-corrected-blocks {
+      type oc-yang:counter64;
+      description
+        "The number FC FEC corrected blocks for this channel.";
+    }
+    
+    leaf fc-fec-uncorrected-blocks {
+      type oc-yang:counter64;
+      description
+        "The number of FC FEC uncorrectable blocks for this channel.";
+    }
+    
+    leaf rs-fec-corrected-symbols {
+      type oc-yang:counter64;
+      description
+        "The number RS FEC corrected symbols for this channel.";
+    }
+    
+    leaf raw-ber {
+      type decimal64 {
+        fraction-digits 18;
+      }
+      description
+        "The phy bit error rate for this channel.";
+    }
+  }
+
+  grouping nvidia-phy-link-down-state {
+    description
+      "Grouping for link down information";
+    
+    leaf total-events {
+      type oc-yang:counter64;
+      description
+        "Total number of link down events.";
+    }
+    
+    leaf intentional-events {
+      type oc-yang:counter64;
+      description
+        "Number of intentional link down events.";
+    }
+    
+    leaf unintentional-events {
+      type oc-yang:counter64;
+      description
+        "Number of unintentional link down events.";
+    }
+    
+    leaf reason-code-local {
+      type uint32;
+      description
+        "Local-side link down reason code.";
+    }
+    
+    leaf reason-code-remote {
+      type uint32;
+      description
+        "Remote-side link down reason code.";
+    }
+    
+    leaf reason-status-local {
+      type string;
+      description
+        "Local-side link down reason status.";
+    }
+    
+    leaf reason-status-remote {
+      type string;
+      description
+        "Remote-side link down reason status.";
+    }
+  }
+
+  grouping nvidia-phy-recovery-state {
+    description
+      "Grouping for recovery information";
+    
+    leaf total-successful-recovery-events {
+      type oc-yang:counter64;
+      description
+        "Number of successful recovery events. This counter is not reset upon link-up.";
+    }
+
+    leaf successful-recovery-events {
+      type oc-yang:counter64;
+      description
+        "Number of successful recovery events.";
+    }
+    
+    leaf time-since-last-recovery {
+      type uint64;
+      units "seconds";
+      description
+        "Time since last recovery event.";
+    }
+    
+    leaf time-between-last-two-recoveries {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time between last two recovery events. Overflows after 1 minute.";
+    }
+    
+    leaf last-logic-recovery-attempts {
+      type uint64;
+      description
+        "Number of attempts in last logic recovery event.";
+    }
+    
+    leaf time-in-last-logic-recovery-event {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time spent in last logic recovery event.";
+    }
+    
+    leaf last-serdes-eq-recovery-attempts {
+      type uint64;
+      description
+        "Number of attempts in last SerDes EQ recovery event.";
+    }
+    
+    leaf time-in-last-serdes-eq-recovery-event {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time spent in last SerDes EQ recovery event.";
+    }
+    
+    leaf last-rs-fec-uncorrectable-during-recovery {
+      type uint64;
+      description
+        "Number of uncorrectable RS-FEC received during last recovery event.";
+    }
+    
+    leaf total-rs-fec-uncorrectable-during-recovery {
+      type uint64;
+      description
+        "Number of uncorrectable RS-FEC received for all recovery events between link flap.";
+    }
+    
+    leaf last-successful-recovery-time {
+      type uint64;
+      units "milliseconds";
+      description
+        "Time of last successful recovery flow event in milliseconds.";
+    }
+    
+    leaf total-successful-recovery-time {
+      type uint64;
+      units "milliseconds";
+      description
+        "Total time in milliseconds of all recovery flows.";
+    }
+    
+    leaf last-successful-recovery-step-attempts {
+      type uint64;
+      description
+        "Number of steps triggered during last successful recovery.";
+    }
+  }
+
+  grouping nvidia-phy-operation-state {
+    description
+      "Grouping for PHY operation information";
+    
+    leaf eth-an-fsm-state {
+      type string;
+      description
+        "FSM state of the Ethernet AN.";
+    }
+    
+    leaf ib-phy-fsm-state {
+      type string;
+      description
+        "FSM state of the IB PHY.";
+    }
+    
+    leaf pd-fsm-state {
+      type string;
+      description
+        "FSM state of the PD.";
+    }
+    
+    leaf phy-hst-fsm-state {
+      type string;
+      description
+        "FSM state of the PHY HST.";
+    }
+    
+    leaf psi-fsm-state {
+      type string;
+      description
+        "FSM state of the PSI.";
+    }
+    
+    leaf cable-proto-cap {
+      type string;
+      description
+        "Cable protocol capability.";
+    }
+    
+    leaf core-to-phy-link-proto-enabled {
+      type string;
+      description
+        "Core to PHY link proto enabled state.";
+    }
+    
+    leaf core-to-phy-link-width-enabled {
+      type string;
+      description
+        "Core to PHY link width enabled state.";
+    }
+    
+    leaf pd-link-speed-enabled {
+      type string;
+      description
+        "PD link speed enabled state.";
+    }
+    
+    leaf pd-link-width-enabled {
+      type string;
+      description
+        "PD link width enabled state.";
+    }
+    
+    leaf phy-hst-link-speed-enabled {
+      type string;
+      description
+        "PHY HST link speed enabled state.";
+    }
+    
+    leaf phy-hst-link-width-enabled {
+      type string;
+      description
+        "PHY HST link width enabled state.";
+    }
+    
+    leaf phy-manager-link-proto-enabled {
+      type string;
+      description
+        "Link enabled proto state of the PHY manager.";
+    }
+    
+    leaf phy-manager-link-width-enabled {
+      type string;
+      description
+        "Link enabled width state of the PHY manager.";
+    }
+    
+    leaf phy-manager-state {
+      type string;
+      description
+        "Current state of the PHY manager.";
+    }
+    
+    leaf retran-mode-active {
+      type string;
+      description
+        "Active retransmission mode.";
+    }
+    
+    leaf retran-mode-request {
+      type string;
+      description
+        "Retransmission mode request.";
+    }
+  }
+
+  grouping nvidia-phy-port-statistics {
+    description
+      "Grouping for IB/NVLINK common port statistics";
+    
+    leaf port-rcv-data {
+      type oc-yang:counter64;
+      description
+        "Number of octets received on the port.";
+    }
+    
+    leaf port-rcv-pkts {
+      type oc-yang:counter64;
+      description
+        "Number of packets received on the port.";
+    }
+    
+    leaf port-xmit-data {
+      type oc-yang:counter64;
+      description
+        "Number of octets transmitted on the port.";
+    }
+    
+    leaf port-xmit-pkts {
+      type oc-yang:counter64;
+      description
+        "Number of packets transmitted on the port.";
+    }
+    
+    leaf port-unicast-rcv-pkts {
+      type oc-yang:counter64;
+      description
+        "Unicast packets received on the port.";
+    }
+    
+    leaf port-unicast-xmit-pkts {
+      type oc-yang:counter64;
+      description
+        "Unicast packets transmitted on the port.";
+    }
+    
+    leaf port-multicast-rcv-pkts {
+      type oc-yang:counter64;
+      description
+        "Multicast packets received on the port.";
+    }
+    
+    leaf port-multicast-xmit-pkts {
+      type oc-yang:counter64;
+      description
+        "Multicast packets transmitted on the port.";
+    }
+  }
+  
+  grouping nvidia-phy-port-errors {
+    description
+      "Grouping for IB/NVLINK common port errors";
+    
+    leaf port-buffer-overrun-errors {
+      type oc-yang:counter64;
+      description
+        "Buffer overrun errors of the port.";
+    }
+    
+    leaf port-dlid-mapping-errors {
+      type oc-yang:counter64;
+      description
+        "DLID mapping errors of the port.";
+    }
+    
+    leaf port-inactive-discards {
+      type oc-yang:counter64;
+      description
+        "Inactive discards of the port.";
+    }
+    
+    leaf port-looping-errors {
+      type oc-yang:counter64;
+      description
+        "Looping errors of the port.";
+    }
+    
+    leaf port-malformed-packet-errors {
+      type oc-yang:counter64;
+      description
+        "Malformed packet errors of the port.";
+    }
+    
+    leaf port-neighbor-mtu-discards {
+      type oc-yang:counter64;
+      description
+        "Neighbor MTU discards of the port.";
+    }
+    
+    leaf port-vl-mapping-errors {
+      type oc-yang:counter64;
+      description
+        "VL mapping errors of the port.";
+    }
+    
+    leaf rq-general-error {
+      type oc-yang:counter64;
+      description
+        "General error of the request.";
+    }
+    
+    leaf sync-header-error-counter {
+      type oc-yang:counter64;
+      description
+        "Sync header error counter.";
+    }
+    
+    leaf port-local-physical-errors {
+      type oc-yang:counter64;
+      description
+        "Local physical errors of the port.";
+    }
+  }
+  
+  grouping nvidia-phy-plr {
+    description
+      "Grouping for IB/NVLINK common PLR counters";
+    
+    leaf plr-bw-loss-percent {
+      type decimal64 {
+        fraction-digits 8;
+      }
+      description
+        "Bandwidth loss percentage of the port.";
+    }
+    
+    leaf plr-codes-loss {
+      type oc-yang:counter64;
+      description
+        "Codes loss of the port.";
+    }
+    
+    leaf plr-rcv-code-err {
+      type oc-yang:counter64;
+      description
+        "Received code errors of the port.";
+    }
+    
+    leaf plr-rcv-codes {
+      type oc-yang:counter64;
+      description
+        "Received codes of the port.";
+    }
+    
+    leaf plr-rcv-uncorrectable-code {
+      type oc-yang:counter64;
+      description
+        "Received uncorrectable codes of the port.";
+    }
+    
+    leaf plr-sync-events {
+      type oc-yang:counter64;
+      description
+        "Sync events of the port.";
+    }
+    
+    leaf plr-xmit-codes {
+      type oc-yang:counter64;
+      description
+        "Transmitted codes of the port.";
+    }
+    
+    leaf plr-xmit-retry-codes {
+      type oc-yang:counter64;
+      description
+        "Transmitted retry codes of the port.";
+    }
+    
+    leaf plr-xmit-retry-events {
+      type oc-yang:counter64;
+      description
+        "Transmitted retry events of the port.";
+    }
+    
+    leaf plr-xmit-retry-events-within-t-sec-max {
+      type oc-yang:counter64;
+      description
+        "Transmitted retry events within T seconds max.";
+    }
+  }
+
+  // Common Infiniband and NVLink PHY information
+  grouping nvidia-phy-protocol-specific {
+    description
+      "Grouping for IB/NVLINK protocol-specific containers";
+    
+    container port-statistics {
+      description
+        "Container for port statistics";
+      
+      container state {
+        config false;
+        description
+          "Port statistics state";
+        
+        uses nvidia-phy-port-statistics;
+      }
+    }
+    
+    container port-errors {
+      description
+        "Container for port errors";
+      
+      container state {
+        config false;
+        description
+          "Port errors state";
+        
+        uses nvidia-phy-port-errors;
+      }
+    }
+    
+    container plr {
+      description
+        "Container for PLR information";
+      
+      container state {
+        config false;
+        description
+          "PLR state";
+        
+        uses nvidia-phy-plr;
+      }
+    }
+  }
+
+  grouping nvidia-phy-top {
+    description
+      "Top-level grouping for physical layer information";
+    
+    container phy {
+      description
+        "Top-level container for physical layer information";
+      
+      container state {
+        config false;
+        description
+          "Physical layer state information";
+        
+        uses nvidia-phy-state;
+      }
+      
+      container ber {
+        description
+          "Container for BER information";
+        
+        container state {
+          config false;
+          description
+            "BER state information";
+          
+          uses nvidia-phy-ber-state;
+        }
+      }
+      
+      container fec {
+        description
+          "Container for FEC information";
+        
+        container state {
+          config false;
+          description
+            "FEC state information";
+          
+          uses nvidia-phy-fec-state;
+        }
+      }
+      
+      container histograms {
+        description
+          "Container for histogram information";
+        
+        container state {
+          config false;
+          description
+            "Histogram state information";
+          
+          uses nvidia-phy-histograms-state;
+        }
+      }
+      
+      container channels {
+        description
+          "Container for channel information";
+        
+        list channel {
+          key "id";
+          description
+            "List of channels";
+          
+          leaf id {
+            type uint8;
+            description
+              "Channel identifier";
+          }
+          
+          container state {
+            config false;
+            description
+              "Channel state information";
+            
+            uses nvidia-phy-channel-state;
+          }
+        }
+      }
+      
+      container link-down-information {
+        description
+          "Container for link down information";
+        
+        container state {
+          config false;
+          description
+            "Link down state information";
+          
+          uses nvidia-phy-link-down-state;
+        }
+      }
+      
+      container recovery-information {
+        description
+          "Container for recovery information";
+        
+        container state {
+          config false;
+          description
+            "Recovery state information";
+          
+          uses nvidia-phy-recovery-state;
+        }
+      }
+      
+      container operation-information {
+        description
+          "Container for operation information";
+        
+        container state {
+          config false;
+          description
+            "Operation state information";
+          
+          uses nvidia-phy-operation-state;
+        }
+      }
+      
+      // NVLink or InfiniBand container based on interface type
+      container infiniband {
+        when "../../oc-if:config/oc-if:type = 'ianaift:infiniband' or ../../oc-if:config/oc-if:type = 'nvidia-if-types:infiniband-plane-port'";
+        description
+          "Container for InfiniBand specific information";
+        
+        uses nvidia-phy-protocol-specific;
+      }
+      
+      container nvlink {
+        when "../../oc-if:config/oc-if:type = 'nvidia-if-types:nvlink'";
+        description
+          "Container for NVLink specific information";
+        
+        uses nvidia-phy-protocol-specific;
+      }
+    }
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface" {
+    description
+      "Augment interfaces with NVIDIA PHY information.";
+    
+    uses nvidia-phy-top;
+  }
+} 
